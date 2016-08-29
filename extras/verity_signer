@@ -1,0 +1,8 @@
+#! /bin/sh
+
+# Start-up script for VeritySigner
+
+VERITYSIGNER_HOME=`dirname "$0"`
+VERITYSIGNER_HOME=`dirname "$VERITYSIGNER_HOME"`
+
+java -Xmx512M -jar "$VERITYSIGNER_HOME"/framework/VeritySigner.jar "$@"
