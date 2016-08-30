@@ -2,7 +2,6 @@
 
 # Start-up script for VeritySigner
 
-VERITYSIGNER_HOME=`dirname "$0"`
-VERITYSIGNER_HOME=`dirname "$VERITYSIGNER_HOME"`
+VERITYSIGNER_HOME=`dirname "$(readlink -f $0)"`
 
-java -Xmx512M -jar "$VERITYSIGNER_HOME"/framework/VeritySigner.jar "$@"
+java -Xmx512M -jar "$VERITYSIGNER_HOME"/blobs/VeritySigner.jar "$@"

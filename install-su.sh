@@ -24,6 +24,10 @@ popd
 
 cp $COPPERHEAD_DIR/images/boot.img $SUPERBOOT_DIR/scripts/boot.img
 
+cp keys/verity.pk8 $SUPERBOOT_DIR/scripts/keystore.pk8
+cp keys/verity.x509.pem $SUPERBOOT_DIR/scripts/keystore.x509.pem
+cp keys/verity_key.pub $SUPERBOOT_DIR/scripts/verity_key
+
 cd $SUPERBOOT_DIR/scripts
 ./bootimg.sh boot.img
 cd -
