@@ -1,7 +1,7 @@
 ## Copperhead Tor Phone Prototype
 
 The pile of scripts in this directory help you create your own rooted
-Tor-enabled gapps capable CopperHead image that is signed with your own keys
+Tor-enabled gapps capable Copperhead image that is signed with your own keys
 for verified boot.
 
 ## Prerequisites
@@ -45,7 +45,7 @@ will simplify installation quite a bit.
 
 ## Bugs
 
-1. The swipe keyboard driver is not being recognized by CopperHead's LatinIME
+1. The swipe keyboard driver is not being recognized by Copperhead's LatinIME
 package for some reason.
 
 2. The bootup script stopped working with Orwall 1.2.0. We have to use Orwall
