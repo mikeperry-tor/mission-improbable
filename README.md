@@ -4,6 +4,11 @@ The pile of scripts in this directory help you create your own rooted
 Tor-enabled gapps capable Copperhead image that is signed with your own keys
 for verified boot.
 
+WARNING: Until we have a re-signed recovery with a custom release key, updates
+to the copperhead OS will not be possible without a full re-flash. Since
+verified boot is enabled, this will require a factory reset! See TODOs for
+more info.
+
 ## Prerequisites
 
 You need a recent fastboot and adb from the command line tools package at the
@@ -37,11 +42,15 @@ on a binary blob for VeritySigner.jar, since building bouncycastle and the
 associated Java signer outside the android build tree is painful.
 
 Eventually, we also should re-sign the recovery image and include a new
-release key, so that self-signed updates can be performed via sideload.
+release key, so that self-signed updates can be performed via sideload. Until
+this is done, this does mean that updates will cause a factory reset, because
+we have to unlock again!
 
 We should also remove the requirement for TWRP by creating gapps install
 scripts to install gapps from the host OS, rather than on the device. This
-will simplify installation quite a bit.
+will simplify installation quite a bit. Alternatively, we could re-sign the
+gapps zip with our own release key so that it could be sideloaded into the
+our modified and re-signed Copperhead recovery (instead of TWRP).
 
 ## Bugs
 
