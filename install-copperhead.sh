@@ -10,12 +10,14 @@ fi
 
 COPPERHEAD_DIR=$1
 
+echo
 echo "Please reboot into the fastboot bootloader and hit enter"
 read junk
 
 cd $COPPERHEAD_DIR
 
 fastboot flashing unlock || true
+sleep 5
 
 echo
 echo "Ensure flashing is unlocked and hit enter"

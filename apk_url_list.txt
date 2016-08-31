@@ -1,0 +1,7 @@
+https://f-droid.org/repo/org.ethack.orwall_38.apk
+https://f-droid.org/repo/org.ethack.orwall_38.apk.asc
+https://f-droid.org/repo/com.projectsexception.myapplist.open_16.apk
+https://f-droid.org/repo/com.projectsexception.myapplist.open_16.apk.asc
+https://f-droid.org/repo/me.phh.superuser_1033.apk
+https://f-droid.org/repo/me.phh.superuser_1033.apk.asc
+https://guardianproject.info/releases/orbot-latest.apk

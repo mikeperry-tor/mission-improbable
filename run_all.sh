@@ -14,6 +14,9 @@ SIMG2IMG_DIR=$3
 TWRP_IMG=$4
 GAPPS_ZIP=$5
 
+./clone-helper-repos.sh
+./fetch-apks.sh
+
 if [ ! -f ./keys/verity_key.pub ];
 then
   cd keys
@@ -28,3 +31,8 @@ fi
 ./re-sign.sh $COPPERHEAD_DIR $SIMG2IMG_DIR
 
 ./flash-signed.sh
+
+./install-packages.sh
+
+echo
+echo "All done! Yay!"

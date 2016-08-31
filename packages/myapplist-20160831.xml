@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<app-list>
+  <app name="Amaze" package="com.amaze.filemanager" />
+  <app name="android.calendar.ics.adapter" package="de.k3b.android.calendar.ics.adapter" />
+  <app name="ApkTrack" package="fr.kwiatkowski.ApkTrack" />
+  <app name="Barcode Scanner" package="com.google.zxing.client.android" />
+  <app name="Bitcoin Wallet" package="de.schildbach.wallet" />
+  <app name="Calendar Import-Export" package="org.sufficientlysecure.ical" />
+  <app name="Cool Reader" package="org.coolreader" />
+  <app name="CSipSimple" package="com.csipsimple" />
+  <app name="Firefox" package="org.mozilla.firefox" />
+  <app name="Intent Intercept" package="uk.co.ashtonbrsc.android.intentintercept" />
+  <app name="K-9 Mail" package="com.fsck.k9" />
+  <app name="Linphone" package="org.linphone" />
+  <app name="MuPDF" package="com.artifex.mupdfdemo" />
+  <app name="My App List" package="com.projectsexception.myapplist.open" />
+  <app name="Offline Calendar" package="org.sufficientlysecure.localcalendar" />
+  <app name="OpenKeychain" package="org.sufficientlysecure.keychain" />
+  <app name="Orbot" package="org.torproject.android" />
+  <app name="orWall" package="org.ethack.orwall" />
+  <app name="OS Monitor" package="com.eolwral.osmonitor" />
+  <app name="OsmAnd~" package="net.osmand.plus" />
+  <app name="Password Store" package="com.zeapo.pwdstore" />
+  <app name="Plumble" package="com.morlunk.mumbleclient" />
+  <app name="Rumble" package="org.disrupted.rumble" />
+  <app name="Superuser" package="me.phh.superuser" />
+  <app name="Terminal Emulator" package="jackpal.androidterm" />
+  <app name="Transportr" package="de.grobox.liberario" />
+  <app name="Twidere" package="org.mariotaku.twidere" />
+  <app name="VLC" package="org.videolan.vlc" />
+  <app name="World Weather" package="com.haringeymobile.ukweather" />
+  <app name="Xabber Dev" package="com.xabber.androiddev" />
+</app-list>

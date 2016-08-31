@@ -11,6 +11,7 @@ fi
 TWRP_IMAGE=$1
 GAPPS_ZIP=$2
 
+echo
 echo "Please reboot into the fastboot bootloader and hit enter"
 read junk
 
@@ -23,8 +24,8 @@ read junk
 fastboot flash recovery $TWRP_IMAGE
 
 echo
-echo "Please reboot into recovery and start adb sideload (under Advanced)."
-echo "You do not need to allow modifications to /system."
+echo "Please reboot into recovery and swipe to start adb sideload (under Advanced)."
+echo "You do not need to allow modifications to /system (keep it read-only)"
 echo "Hit enter once you have started sideload from the recovery."
 read junk
 
