@@ -18,3 +18,6 @@ adb push myapplist*xml /sdcard/MyAppList/
 
 echo "Disabling captive portal detection"
 adb shell "settings put global captive_portal_detection_enabled 0"
+
+echo
+echo "Don't forget to disable debugging!"

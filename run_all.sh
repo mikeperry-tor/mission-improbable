@@ -2,19 +2,19 @@
 
 set -e
 
-if [ $# -ne 5 ]
+if [ $# -ne 4 ]
 then
-  echo "Usage: $0 <copperhead_factory_dir> <superboot_dir> <simg2img_dir> <twrp_image> <gapps.zip>"
+  echo "Usage: $0 <copperhead_factory_dir> <helper_dest_dir> <twrp_image> <gapps.zip>"
   exit 1
 fi
 
 COPPERHEAD_DIR=$1
-SUPERBOOT_DIR=$2
-SIMG2IMG_DIR=$3
-TWRP_IMG=$4
-GAPPS_ZIP=$5
+SUPERBOOT_DIR=$2/super-bootimg
+SIMG2IMG_DIR=$2/android-simg2img
+TWRP_IMG=$3
+GAPPS_ZIP=$4
 
-./clone-helper-repos.sh
+./clone-helper-repos.sh $SUPERBOOT_DIR $SIMG2IMG_DIR
 ./fetch-apks.sh
 
 if [ ! -f ./keys/verity_key.pub ];

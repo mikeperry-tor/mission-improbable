@@ -39,6 +39,10 @@ associated Java signer outside the android build tree is painful.
 Eventually, we also should re-sign the recovery image and include a new
 release key, so that self-signed updates can be performed via sideload.
 
+We should also remove the requirement for TWRP by creating gapps install
+scripts to install gapps from the host OS, rather than on the device. This
+will simplify installation quite a bit.
+
 ## Bugs
 
 1. The swipe keyboard driver is not being recognized by CopperHead's LatinIME
