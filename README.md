@@ -4,12 +4,14 @@ The pile of scripts in this directory help you create your own rooted
 Tor-enabled gapps capable Copperhead image that is signed with your own keys
 for verified boot.
 
-WARNING: Until we have a re-signed recovery with a custom release key, updates
-to the copperhead OS will not be possible without a full re-flash. Since
-verified boot is enabled, this will require a factory reset! This will be true
-for all devices initially installed *without* a re-signed recovery image, even
-if one becomes available later. See TODOs for more info.
-
+WARNING: In order to apply updates, you will need a way to create a new system
+image for that update with the Google Apps installed. We don't have a way to
+do this right now without using a secondary device to apply the gapps to and
+extract the system partition, since updating the system.img will break
+verified boot and/or cause a factory reset. Ideally, we would create a way to
+apply gapps to a system.img on the host that we could flash through the
+recovery as part of a re-signed update, but we don't have that done yet.
+ 
 ## Prerequisites
 
 You need a recent fastboot and adb from the command line tools package at the
@@ -45,23 +47,20 @@ some people might just want Gapps and not Root+Tor.
 bouncycastle and the associated Java signer outside the android build tree
 is painful.
 
-* Eventually, we also should re-sign the recovery image and include a new
-release key, so that self-signed updates can be performed via sideload. Until
-this is done, this does mean that devices that were installed without a
-re-signed recovery will require a factory reset to update, because we have
-to unlock again to flash from fastboot!
-
 * We should also remove the requirement for TWRP by creating gapps install
 scripts to install gapps from the host OS, rather than on the device. This
-will simplify installation quite a bit. Alternatively, we could re-sign the
-gapps zip with our own release key so that it could be sideloaded into
-our modified and re-signed Copperhead recovery (instead of TWRP).
+will simplify installation and updates quite a bit. Alternatively, we could
+re-sign the gapps zip with our own release key so that it could be sideloaded
+into our modified and re-signed Copperhead recovery (instead of TWRP), but the
+current gapps can't be installed on a Copperhead recovery due to an
+incompatible shell...
 
 ## Future Work
 
 * Instead of OpenGapps, it might be nice to provide the MicroG builds:
 https://microg.org/. This requires some hackery to spoof the Google Play
-Service Signature field, though...
+Service Signature field, though:
+https://github.com/microg/android_packages_apps_GmsCore/wiki/Signature-Spoofing
 
 * Back in the WhisperCore days, Moxie wrote a Netfilter module using libiptc
 that enabled apps to edit iptables rules if they had permissions for it. This
