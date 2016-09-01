@@ -3,10 +3,12 @@
 set -e
 
 EXTRAS_PATH=$(readlink -f ./extras/)
+KEYS_PATH=$(readlink -f ./keys/)
+IMAGES_PATH=$(readlink -f ./images/)
 
-if [ ! -d "$1" -o ! -d "$2" ]
+if [ ! -d "$1" -o ! -d "$2" -o ! -d "$3" ]
 then
-  echo "Usage: $0 <copperhead_factory_directory> <android-simg2img_dir>"
+  echo "Usage: $0 <copperhead_factory_directory> <android-simg2img_dir> <superbootimg_dir>"
   exit 1
 fi
 
@@ -19,6 +21,7 @@ fi
 
 COPPERHEAD_DIR=$1
 TOOL_PATH=$(readlink -f $2)
+SUPERBOOT_PATH=$(readlink -f $3)
 
 cp $COPPERHEAD_DIR/images/*.img ./images/
 cd images
@@ -69,3 +72,32 @@ $TOOL_PATH/append2simg vendor-signed.img verity.img
 
 # For Recovery: XXX: Need to also replace verity_key, but a resigned
 # recovery is not really needed at all at this point.
+
+RECOVERYRAMDISK_DIR="$(mktemp -d)"
+RECOVERYFILES_DIR="$(mktemp -d)"
+
+cd $RECOVERYRAMDISK_DIR
+$SUPERBOOT_PATH/scripts/bin/bootimg-extract $IMAGES_PATH/recovery.img
+
+cd $RECOVERYFILES_DIR
+
+gunzip -c "$RECOVERYRAMDISK_DIR"/ramdisk.gz | cpio -i
+gunzip -c "$RECOVERYRAMDISK_DIR"/ramdisk.gz > ramdisk1
+
+cp $KEYS_PATH/release_key ./res/keys
+cp $KEYS_PATH/verity_key.pub ./verity_key
+echo "res/keys verity_key" |tr ' ' '\n' | cpio -o -H newc > ramdisk2
+
+rm -f cpio-*
+
+$SUPERBOOT_PATH/scripts/bin/strip-cpio ramdisk1 res/keys verity_key
+cat cpio-* ramdisk2 |gzip -9 -c > "$RECOVERYRAMDISK_DIR"/ramdisk.gz
+
+cd $RECOVERYRAMDISK_DIR
+rm -f cpio-*
+$SUPERBOOT_PATH/scripts/bin/bootimg-repack $IMAGES_PATH/recovery.img
+
+java -jar $SUPERBOOT_PATH/scripts/keystore_tools/BootSignature.jar /recovery new-boot.img $KEYS_PATH/verity.pk8 $KEYS_PATH/verity.x509.pem $IMAGES_PATH/recovery-signed.img
+
+rm -Rf "$RECOVERYFILES_DIR"
+rm -Rf "$RECOVERYRAMDISK_DIR"

@@ -28,7 +28,7 @@ fi
 ./install-su.sh $COPPERHEAD_DIR $SUPERBOOT_DIR
 
 ./install-gapps.sh $TWRP_IMG $GAPPS_ZIP
-./re-sign.sh $COPPERHEAD_DIR $SIMG2IMG_DIR
+./re-sign.sh $COPPERHEAD_DIR $SIMG2IMG_DIR $SUPERBOOT_DIR
 
 ./flash-signed.sh
 
