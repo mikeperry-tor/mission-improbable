@@ -4,14 +4,6 @@ The pile of scripts in this directory help you create your own rooted
 Tor-enabled gapps capable Copperhead image that is signed with your own keys
 for verified boot.
 
-WARNING: In order to apply updates, you will need a way to create a new system
-image for that update with the Google Apps installed. We don't have a way to
-do this right now without using a secondary device to apply the gapps to and
-extract the system partition, since updating the system.img will break
-verified boot and/or cause a factory reset. Ideally, we would create a way to
-apply gapps to a system.img on the host that we could flash through the
-recovery as part of a re-signed update, but we don't have that done yet.
- 
 ## Prerequisites
 
 You need a recent fastboot and adb from the command line tools package at the
@@ -47,13 +39,10 @@ some people might just want Gapps and not Root+Tor.
 bouncycastle and the associated Java signer outside the android build tree
 is painful.
 
-* We should also remove the requirement for TWRP by creating gapps install
-scripts to install gapps from the host OS, rather than on the device. This
-will simplify installation and updates quite a bit. Alternatively, we could
-re-sign the gapps zip with our own release key so that it could be sideloaded
-into our modified and re-signed Copperhead recovery (instead of TWRP), but the
-current gapps can't be installed on a Copperhead recovery due to an
-incompatible shell...
+* We also need root right now to edit the ext4 images by mounting them.
+Technically we could use make_ext4fs from the Android build tree, but it
+requires a block map, file permission lists, and selinux context lists. We
+would need some other tool to extract (or keep copies of) those..
 
 ## Future Work
 

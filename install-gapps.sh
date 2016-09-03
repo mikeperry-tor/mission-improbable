@@ -38,4 +38,8 @@ read junk
 adb pull /dev/block/platform/soc.0/f9824900.sdhci/by-name/system ./images/system.img.raw
 
 echo
-echo "Extracted raw system image with gapps."
+echo "We now need sudo to extract a delta of the gapps files for future updates"
+
+sudo mount ./images/system.img.raw ./images/system/
+cd images
+sudo tar -Jcvf gapps-delta.tar.xz --selinux --files-from ../gapps_filelist-6.0.txt
