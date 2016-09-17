@@ -35,9 +35,11 @@ cd images
 # Remove old files that gapps removes
 sudo rm -rf system/priv-app/ConfigUpdater/oat
 sudo rm -rf system/framework/com.google.android.camera.experimental2015.jar
+sudo rm -rf system/priv-app/ExtServices
 sudo rm -rf system/priv-app/HotwordEnrollment
 sudo rm -rf system/priv-app/OneTimeInitializer
 sudo rm -rf system/priv-app/PackageInstaller
+sudo rm -rf system/priv-app/Provision
 sudo tar --selinux -Jxvf gapps-delta.tar.xz
 sudo umount ./system
 cd ..

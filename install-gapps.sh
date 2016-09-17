@@ -42,4 +42,5 @@ echo "We now need sudo to extract a delta of the gapps files for future updates"
 
 sudo mount ./images/system.img.raw ./images/system/
 cd images
-sudo tar -Jcvf gapps-delta.tar.xz --selinux --files-from ../gapps_filelist-6.0.txt
+sudo tar -Jcvf gapps-delta.tar.xz --selinux --files-from ../gapps_filelist-7.0.txt
+sudo umount system

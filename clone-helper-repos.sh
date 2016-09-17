@@ -15,7 +15,8 @@ then
   cd -
 fi
 
+# XXX: Should add something to check for a different origin/branch/checkout and fix it
 if [ ! -d $SUPERBOOT_DIR ]
 then
-  git clone -b verity_fix https://github.com/mikeperry-tor/super-bootimg $SUPERBOOT_DIR
+  git clone -b verity_fix-nougat https://github.com/mikeperry-tor/super-bootimg $SUPERBOOT_DIR
 fi
