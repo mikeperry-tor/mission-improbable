@@ -1,0 +1,22 @@
+getprop("ro.product.device") == "angler" || abort("E3004: This package is for \"angler\" devices; this is a \"" + getprop("ro.product.device") + "\".");
+
+ui_print("Patching system image unconditionally...");
+package_extract_file("system-signed.raw", "/dev/block/platform/soc.0/f9824900.sdhci/by-name/system");
+
+ui_print("Patching vendor image unconditionally...");
+package_extract_file("vendor-signed.raw", "/dev/block/platform/soc.0/f9824900.sdhci/by-name/vendor");
+
+ui_print("Patching boot image unconditionally...");
+package_extract_file("boot-signed.img", "/dev/block/platform/soc.0/f9824900.sdhci/by-name/boot");
+
+# XXX: Bootloader :(
+
+ui_print("Writing radio...");
+# XXX: This is wrong. there is a small difference between the factory radio.img
+# and the OTA modem update..
+#package_extract_file("radio.img", "/dev/block/platform/soc.0/f9824900.sdhci/by-name/modem");
+
+ui_print("Patching recovery image unconditionally...");
+package_extract_file("recovery-signed.img", "/dev/block/platform/soc.0/f9824900.sdhci/by-name/recovery");
+
+ui_print("Update Applied!");

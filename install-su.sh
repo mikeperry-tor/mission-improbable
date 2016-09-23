@@ -32,6 +32,8 @@ cd $SUPERBOOT_DIR/scripts
 ./bootimg.sh boot.img
 cd -
 
+mkdir -p images
+
 cp $SUPERBOOT_DIR/scripts/new-boot.img.signed ./images/boot-signed.img
 
 

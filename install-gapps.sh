@@ -32,7 +32,8 @@ read junk
 adb sideload $GAPPS_ZIP
 
 echo
-echo "Ensure recovery screen is not locked (swipe to unlock) and hit enter"
+echo "Ensure recovery screen is not locked (swipe to unlock) and hit enter."
+echo "You may need to unplug and replug your device after starting sideload.."
 read junk
 
 adb pull /dev/block/platform/soc.0/f9824900.sdhci/by-name/system ./images/system.img.raw
@@ -42,5 +43,5 @@ echo "We now need sudo to extract a delta of the gapps files for future updates"
 
 sudo mount ./images/system.img.raw ./images/system/
 cd images
-sudo tar -Jcvf gapps-delta.tar.xz --selinux --files-from ../gapps_filelist-7.0.txt
+sudo tar -Jcvf ../packages/gapps-delta.tar.xz --selinux --files-from ../gapps_filelist-7.0.txt
 sudo umount system

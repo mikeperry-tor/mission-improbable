@@ -11,7 +11,8 @@ bottom of https://developer.android.com/studio/index.html#downloads. The ones
 in Debian/stable are sadly too old :(. You can tell if yours is recent enough
 if fastboot supports the "fastboot flashing unlock" command.
 
-You also need a Java JRE/JDK 1.7 or higher.
+You also need a Java JRE/JDK 1.7 or higher, git, gcc, g++, and openssl
+development packages (libssl-dev or openssl-devel).
 
 You also need TWRP from https://dl.twrp.me/angler/ (or your device) and an
 extracted Copperhead factory image from https://copperhead.co/android/downloads.
@@ -67,4 +68,6 @@ cause issues, or have library search path issues for stock users.
 2. The bootup script stopped working with Orwall 1.2.0. We have to use Orwall
 1.1.0. Do not upgrade to 1.2.0 or networking will break.
 
+3. Updating via sideload (in update.sh) is buggy still. It does not update the
+radio or bootloader firmwares, and may have other issues.
 

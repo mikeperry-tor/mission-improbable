@@ -1,0 +1,5 @@
+ota-required-cache=0
+ota-type=BLOCK
+post-build=Android/aosp_angler/angler:7.0/NRD90U/2016.09.21.10.30.07:user/release-keys
+post-timestamp=1474463090
+pre-device=angler

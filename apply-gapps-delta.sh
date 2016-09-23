@@ -1,6 +1,8 @@
 #!/bin/bash
 
-if [ ! -f ./images/gapps-delta.tar.xz ]
+set -e
+
+if [ ! -f "./packages/gapps-delta.tar.xz" ]
 then
   echo "Need a Google Apps Delta from a previous install.."
   exit 1
@@ -24,9 +26,9 @@ then
 fi
 cd ../../
 
-$TOOL_PATH/simg2img $COPPERHEAD_DIR/images/system.img ./images/system.img.raw
-
 mkdir -p images/system
+
+$TOOL_PATH/simg2img $COPPERHEAD_DIR/images/system.img ./images/system.img.raw
 
 echo "We now need sudo to mount the system image and apply the delta"
 
@@ -40,7 +42,7 @@ sudo rm -rf system/priv-app/HotwordEnrollment
 sudo rm -rf system/priv-app/OneTimeInitializer
 sudo rm -rf system/priv-app/PackageInstaller
 sudo rm -rf system/priv-app/Provision
-sudo tar --selinux -Jxvf gapps-delta.tar.xz
+sudo tar --selinux -Jxvf ../packages/gapps-delta.tar.xz
 sudo umount ./system
 cd ..
 
