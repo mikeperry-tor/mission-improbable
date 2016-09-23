@@ -33,9 +33,7 @@ echo "(Otherwise, OpenGapps won't install properly)."
 read junk
 
 # Bleh. Sometimes you need to plug the device in again..
-adb devices | grep sideload > /dev/null
-
-if [ ! $? ]
+if [ -z "$(adb devices | grep sideload)" ]
 then
   echo
   echo "You need to unplug and replug your device after starting sideload.."
@@ -45,8 +43,7 @@ fi
 
 adb sideload $GAPPS_ZIP
 
-adb devices | grep recovery > /dev/null
-if [ ! $? ]
+if [ -z "$(adb devices | grep recovery)" ]
 then
   echo
   echo "Ensure recovery screen is not locked (swipe to unlock) and hit enter."

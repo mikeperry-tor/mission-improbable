@@ -81,8 +81,7 @@ read junk
 echo "Select Apply Update from ADB"
 read junk
 
-adb devices | grep sideload > /dev/null
-if [ ! $? ]
+if [ -z "$(adb devices | grep sideload)" ]
 then
   echo
   echo "You need to unplug and replug your device after starting sideload.."
