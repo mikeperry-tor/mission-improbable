@@ -7,11 +7,13 @@ echo "Developer options->enable USB Debugging.)"
 echo "When this is done, hit enter."
 read junk
 
-# XXX: Actually test this..
-echo
-echo "You may also have to disconnect and reconnect USB and authorize the"
-echo "debugging connection.."
-read junk
+if [ -z "$(adb devices | grep "device$")" ]
+then
+  echo
+  echo "You have to disconnect and reconnect USB and authorize the"
+  echo "debugging connection.."
+  read junk
+fi
 
 cd packages
 
