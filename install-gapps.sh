@@ -12,7 +12,7 @@ TWRP_IMAGE=$1
 GAPPS_ZIP=$2
 
 echo
-echo "Please reboot into the fastboot bootloader and hit enter"
+echo "Ensure the fastboot bootloader is ready and hit enter."
 read junk
 
 fastboot flashing unlock || true
@@ -26,6 +26,11 @@ fastboot flash recovery $TWRP_IMAGE
 echo
 echo "Please reboot into recovery and swipe to start adb sideload (under Advanced)."
 echo "You do not need to allow modifications to /system (keep it read-only)"
+echo
+echo "If the recovery tries to reboot due to an error, do not let the system"
+echo "boot! Reboot into the bootloader immediately and enter recovery again."
+echo "(Otherwise, OpenGapps won't install properly)."
+read junk
 
 # Bleh. Sometimes you need to plug the device in again..
 adb devices | grep sideload > /dev/null
