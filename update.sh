@@ -19,9 +19,9 @@ then
   exit 1
 fi
 
-if [ ! -f "./extras/updater-script-$DEVICE" ]
+if [ ! -f "./extras/${DEVICE}/updater-script" ]
 then
-  echo "./extras/updater-script-$DEVICE not found. Device unsupported?"
+  echo "./extras/${DEVICE}/updater-script not found. Device unsupported?"
   exit 1
 fi
 
@@ -55,14 +55,13 @@ cp ./images/system-signed.raw ./update/
 cp ./images/vendor-signed.raw ./update/
 cp ./images/boot-signed.img ./update/
 cp ./images/recovery-signed.img ./update/
-# XXX: Wrong radio image. We need to convert it into a modem image somehow..
-cp $COPPERHEAD_DIR/radio-*.img ./update/radio.img
+./extras/${DEVICE}/convert-factory.py $COPPERHEAD_DIR/radio-*.img $COPPERHEAD_DIR/bootloader-*.img ./update
 
 cd update
 mkdir -p META-INF/com/google/android/
 mkdir -p META-INF/com/android/
 
-cp ../extras/updater-script-$DEVICE META-INF/com/google/android/updater-script
+cp ../extras/${DEVICE}/updater-script META-INF/com/google/android/updater-script
 cp ../extras/blobs/update-binary META-INF/com/google/android/
 cp ../extras/metadata META-INF/com/android
 

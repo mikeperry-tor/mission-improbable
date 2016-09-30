@@ -1,0 +1,41 @@
+getprop("ro.product.device") == "angler" || abort("E3004: This package is for \"angler\" devices; this is a \"" + getprop("ro.product.device") + "\".");
+
+ui_print("Patching system image unconditionally...");
+package_extract_file("system-signed.raw", "/dev/block/platform/soc.0/f9824900.sdhci/by-name/system");
+
+ui_print("Patching vendor image unconditionally...");
+package_extract_file("vendor-signed.raw", "/dev/block/platform/soc.0/f9824900.sdhci/by-name/vendor");
+
+ui_print("Patching boot image unconditionally...");
+package_extract_file("boot-signed.img", "/dev/block/platform/soc.0/f9824900.sdhci/by-name/boot");
+
+ui_print("Writing bootloader...");
+package_extract_file("bootloader-flag.txt", "/dev/block/platform/soc.0/f9824900.sdhci/by-name/misc");
+ui_print("writing partition image cmnlib");
+package_extract_file("bootloader.cmnlib.img", "/dev/block/platform/soc.0/f9824900.sdhci/by-name/cmnlib");
+ui_print("writing partition image sbl1");
+package_extract_file("bootloader.sbl1.img", "/dev/block/platform/soc.0/f9824900.sdhci/by-name/sbl1");
+ui_print("writing partition image tz");
+package_extract_file("bootloader.tz.img", "/dev/block/platform/soc.0/f9824900.sdhci/by-name/tz");
+ui_print("writing partition image keymaster");
+package_extract_file("bootloader.keymaster.img", "/dev/block/platform/soc.0/f9824900.sdhci/by-name/keymaster");
+ui_print("writing partition image pmic");
+package_extract_file("bootloader.pmic.img", "/dev/block/platform/soc.0/f9824900.sdhci/by-name/pmic");
+ui_print("writing partition image hyp");
+package_extract_file("bootloader.hyp.img", "/dev/block/platform/soc.0/f9824900.sdhci/by-name/hyp");
+ui_print("writing partition image aboot");
+package_extract_file("bootloader.aboot.img", "/dev/block/platform/soc.0/f9824900.sdhci/by-name/aboot");
+ui_print("writing partition image rpm");
+package_extract_file("bootloader.rpm.img", "/dev/block/platform/soc.0/f9824900.sdhci/by-name/rpm");
+ui_print("writing partition image sdi");
+package_extract_file("bootloader.sdi.img", "/dev/block/platform/soc.0/f9824900.sdhci/by-name/sdi");
+package_extract_file("bootloader-flag-clear.txt", "/dev/block/platform/soc.0/f9824900.sdhci/by-name/misc");
+ui_print("Writing radio...");
+ui_print("writing partition image modem");
+package_extract_file("radio.modem.img", "/dev/block/platform/soc.0/f9824900.sdhci/by-name/modem");
+s
+
+ui_print("Patching recovery image unconditionally...");
+package_extract_file("recovery-signed.img", "/dev/block/platform/soc.0/f9824900.sdhci/by-name/recovery");
+
+ui_print("Update Applied!");
