@@ -8,6 +8,7 @@ system/etc/g.prop
 system/etc/permissions/com.google.android.dialer.support.xml
 system/etc/permissions/com.google.android.maps.xml
 system/etc/permissions/com.google.android.media.effects.xml
+system/etc/permissions/com.google.widevine.software.drm.xml
 system/etc/preferred-apps
 system/etc/sysconfig
 system/framework/com.google.android.dialer.support.jar

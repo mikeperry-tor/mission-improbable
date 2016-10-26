@@ -36,11 +36,9 @@ sudo mount ./images/system.img.raw ./images/system
 cd images
 # Remove old files that gapps removes
 sudo rm -rf system/priv-app/ConfigUpdater/oat
-sudo rm -rf system/framework/com.google.android.camera.experimental2015.jar
 sudo rm -rf system/priv-app/ExtServices
 sudo rm -rf system/priv-app/HotwordEnrollment
 sudo rm -rf system/priv-app/OneTimeInitializer
-sudo rm -rf system/priv-app/PackageInstaller
 sudo rm -rf system/priv-app/Provision
 sudo rm -rf system/lib/libfilterpack_facedetect.so
 sudo rm -rf system/lib64/libfilterpack_facedetect.so
