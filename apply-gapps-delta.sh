@@ -42,6 +42,8 @@ sudo rm -rf system/priv-app/HotwordEnrollment
 sudo rm -rf system/priv-app/OneTimeInitializer
 sudo rm -rf system/priv-app/PackageInstaller
 sudo rm -rf system/priv-app/Provision
+sudo rm -rf system/lib/libfilterpack_facedetect.so
+sudo rm -rf system/lib64/libfilterpack_facedetect.so
 sudo tar --selinux -Jxvf ../packages/gapps-delta.tar.xz
 sudo umount ./system
 cd ..
