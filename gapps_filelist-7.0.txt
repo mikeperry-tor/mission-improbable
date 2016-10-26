@@ -3,6 +3,7 @@ system/app/GoogleCalendarSyncAdapter
 system/app/GoogleContactsSyncAdapter
 system/app/GoogleExtShared
 system/app/GoogleTTS
+system/etc/default-permissions
 system/etc/g.prop
 system/etc/permissions/com.google.android.dialer.support.xml
 system/etc/permissions/com.google.android.maps.xml
@@ -18,7 +19,6 @@ system/priv-app/GoogleExtServices
 system/priv-app/GoogleFeedback
 system/priv-app/GoogleLoginService
 system/priv-app/GoogleOneTimeInitializer
-system/priv-app/GooglePackageInstaller
 system/priv-app/GooglePartnerSetup
 system/priv-app/GoogleServicesFramework
 system/priv-app/Phonesky
