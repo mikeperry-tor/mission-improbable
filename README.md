@@ -17,8 +17,7 @@ development packages (libssl-dev or openssl-devel).
 You also need TWRP from https://dl.twrp.me/angler/ (or your device) and an
 extracted Copperhead factory image from https://copperhead.co/android/downloads.
 
-Finally, you need opengapps from https://opengapps.github.io/. The pico image
-will work, if you only want Google Play Services and the Play store.
+Finally, you need opengapps pico from https://opengapps.github.io/. Right now, we only support the pico image for updates.
 
 You need some other things, too, but the scripts will download them for you.
 Run ./run_all.sh with torsocks if you want to fetch that stuff via Tor.
@@ -31,26 +30,55 @@ best thing to do is just run ./run_all.sh.
 
 ## TODOs
 
+* We should probably have a script that does some dependency checking and
+helps the user install stuff they need to build and install everything.
+
+* The update process only supports angler right now, and kind of poorly. Once
+we get that working better, we should add update scripts for other Nexus
+devices.
+
+* We should support the new Nougat FECC layer on top of Verity. Right now, we
+leave it out. (https://android-developers.blogspot.com/2016/07/strictly-enforced-verified-boot-with.html)
+
+* If we wanted to support more opengapps than pico, we could generate the
+gapps file list on the fly.
+
+* We should build or replace as many of the binary blobs as we can. For some
+things, this is very tricky, since they have dependencies across the android
+tree.
+
+* Instead of OpenGapps, it might be nice to provide the MicroG builds: https://microg.org/. This requires some hackery to spoof the Google Play Service Signature field, though: https://github.com/microg/android_packages_apps_GmsCore/wiki/Signature-Spoofing. Unfortunately, this method creates a permission that any app can request to spoof signatures for any service. I'd be much happier about this if we could find a way for MicroG to be the only app to be able to spoof permissions, and only for the Google services it was replacing.
+
 * Right now, we require superuser, since the super-bootimg scripts are used to
 sign the boot partition and ensure verified boot. This is not ideal, since
-those scripts depend on some binary blobs in that repository, and also because
-some people might just want Gapps and not Root+Tor.
-
-* We also depend on a binary blob for VeritySigner.jar, since building
-bouncycastle and the associated Java signer outside the android build tree
-is painful.
+those scripts depend on some binary blobs in that repository (see below), and
+also because some people might just want Gapps and not Root+Tor.
 
 * We also need root right now to edit the ext4 images by mounting them.
 Technically we could use make_ext4fs from the Android build tree, but it
 requires a block map, file permission lists, and selinux context lists. We
 would need some other tool to extract (or keep copies of) those..
 
-## Future Work
+## Binary blobs that run on the host machine
 
-* Instead of OpenGapps, it might be nice to provide the MicroG builds:
-https://microg.org/. This requires some hackery to spoof the Google Play
-Service Signature field, though:
-https://github.com/microg/android_packages_apps_GmsCore/wiki/Signature-Spoofing
+The following is a list of binary blobs we run on your machine during build.
+(XXX: Find and link to the sources for these).
+
+* ./extras/blobs/dumpkey.jar
+* ./extras/blobs/signapk.jar
+* ./extras/blobs/VeritySigner.jar
+* ../super-bootimg/scripts/bin/bootimg-extract
+* ../super-bootimg/scripts/bin/bootimg-repack
+* ../super-bootimg/scripts/bin/sepolicy-inject
+* ../super-bootimg/scripts/bin/strip-cpio
+
+## Binary blobs that run on the phone
+
+* ./extras/blobs/update-binary
+* ../super-bootimg/scripts/bin/su-arm
+* OpenGapps/Google Play
+
+## Future Work
 
 * Back in the WhisperCore days, Moxie wrote a Netfilter module using libiptc
 that enabled apps to edit iptables rules if they had permissions for it. This
@@ -70,4 +98,3 @@ cause issues, or have library search path issues for stock users.
 
 3. Updating via sideload (in update.sh) is buggy still. It does not update the
 radio or bootloader firmwares, and may have other issues.
-
