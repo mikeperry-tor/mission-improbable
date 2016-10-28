@@ -33,7 +33,6 @@ package_extract_file("bootloader-flag-clear.txt", "/dev/block/platform/soc.0/f98
 ui_print("Writing radio...");
 ui_print("writing partition image modem");
 package_extract_file("radio.modem.img", "/dev/block/platform/soc.0/f9824900.sdhci/by-name/modem");
-s
 
 ui_print("Patching recovery image unconditionally...");
 package_extract_file("recovery-signed.img", "/dev/block/platform/soc.0/f9824900.sdhci/by-name/recovery");
