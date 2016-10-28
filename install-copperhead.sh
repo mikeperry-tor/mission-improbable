@@ -11,7 +11,7 @@ fi
 COPPERHEAD_DIR=$1
 
 echo
-echo "Please reboot into the fastboot bootloader and hit enter"
+echo "Please reboot into fastboot (Boot while holding Power and Volume Down) and hit enter"
 read junk
 
 cd $COPPERHEAD_DIR

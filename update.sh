@@ -26,7 +26,6 @@ then
 fi
 
 echo "WARNING: This update script may contain bugs."
-echo "It also doesn't update the radio or bootloader firmwares yet."
 echo "Proceed at your own risk!"
 read junk
 
@@ -74,10 +73,12 @@ cd ..
 java -jar ./extras/blobs/signapk.jar -w ./keys/releasekey.x509.pem ./keys/releasekey.pk8 ${DEVICE}-update.zip ${DEVICE}-update-signed.zip
 
 echo
-echo "Now please reboot your device into recovery..."
-echo "(Tap Volume + Power-Up to get past the broken android logo..)"
+echo "Now please reboot your device into recovery:"
+echo "  1. Reboot into Fastboot with Power + Volume Down"
+echo "  2. Use Volume Down to select Recovery, and press Power"
+echo "  3. Briefly tap Power + Volume-Up to get past the broken android logo."
 read junk
-echo "Select Apply Update from ADB"
+echo "Now select 'Apply Update from ADB' with Volume Down, and press Power."
 read junk
 
 if [ -z "$(adb devices | grep sideload)" ]

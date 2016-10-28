@@ -3,7 +3,7 @@
 set -e
 
 echo
-echo "Please reboot into the fastboot bootloader and hit enter"
+echo "Please ensure the device is in the fastboot bootloader and hit enter"
 read junk
 
 fastboot flashing unlock || true
