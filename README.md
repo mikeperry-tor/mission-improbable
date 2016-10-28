@@ -14,11 +14,6 @@ if fastboot supports the "fastboot flashing unlock" command.
 You also need a Java JRE/JDK 1.7 or higher, git, gcc, g++, and openssl
 development packages (libssl-dev or openssl-devel).
 
-You also need TWRP from https://dl.twrp.me/angler/ (or your device) and an
-extracted Copperhead factory image from https://copperhead.co/android/downloads.
-
-Finally, you need opengapps pico from https://opengapps.github.io/. Right now, we only support the pico image for updates.
-
 You need some other things, too, but the scripts will download them for you.
 Run ./run_all.sh with torsocks if you want to fetch that stuff via Tor.
 
@@ -26,19 +21,41 @@ Run ./run_all.sh with torsocks if you want to fetch that stuff via Tor.
 
 There are a ton of scripts in here. Eventually, we want to make it possible to
 choose if you want Google Apps, SuperUser, Tor, or some subset. For now, the
-best thing to do is just run ./run_all.sh.
+best thing to do is just run ./run_all.sh. The script should walk you through
+everything, printing out instructions (and command output) as it goes. It will
+halt on any error, but you can re-run it from the top or run pieces of it
+individually.
+
+Here is an example (after you have downloaded the angler factory image from
+https://copperhead.co/android/downloads and its signature and placed it in
+this directory):
+
+~~~~
+$ gpg angler-factory-2016.10.27.20.13.46.tar.xz.sig
+$ tar -Jxvf angler-factory-2016.10.27.20.13.46.tar.xz
+$ ./run_all.sh angler-nbd90z ./helper-repos/
+~~~~
+
+To update your phone, download a new Copperhead Factory Image from website,
+and install it with update.sh.
+
+~~~~
+$ gpg angler-factory-2016.10.27.20.13.46.tar.xz.sig
+$ tar -Jxvf angler-factory-2016.10.27.20.13.46.tar.xz
+$ ./update.sh angler-nbd90z ./helper-repos/ angler
+~~~~
 
 ## TODOs
 
 * We should probably have a script that does some dependency checking and
 helps the user install stuff they need to build and install everything.
 
-* The update process only supports angler right now, and kind of poorly. Once
-we get that working better, we should add update scripts for other Nexus
-devices.
+* The update process only supports angler (Nexus 6P) right now. Once
+  Copperhead supports the newer Pixel devices, we'll try to add those.
 
 * We should support the new Nougat FECC layer on top of Verity. Right now, we
-leave it out. (https://android-developers.blogspot.com/2016/07/strictly-enforced-verified-boot-with.html)
+  leave it out.
+  (https://android-developers.blogspot.com/2016/07/strictly-enforced-verified-boot-with.html)
 
 * If we wanted to support more opengapps than pico, we could generate the
 gapps file list on the fly.
@@ -76,7 +93,7 @@ The following is a list of binary blobs we run on your machine during build.
 
 * ./extras/blobs/update-binary
 * ../super-bootimg/scripts/bin/su-arm
-* OpenGapps/Google Play
+* ./packages/gapps-delta.tar.xz (OpenGapps Pico)
 
 ## Future Work
 
@@ -93,8 +110,6 @@ https://github.com/CopperheadOS/platform_packages_inputmethods_LatinIME/blob/mar
 We need to do a test build and ensure that flipping that pref won't spam logs,
 cause issues, or have library search path issues for stock users.
 
-2. The bootup script stopped working with Orwall 1.2.0. We have to use Orwall
-1.1.0. Do not upgrade to 1.2.0 or networking will break.
-
-3. Updating via sideload (in update.sh) is buggy still. It does not update the
-radio or bootloader firmwares, and may have other issues.
+2. The bootup script [stopped working](https://github.com/EthACKdotOrg/orWall/issues/121) with Orwall
+1.2.0. We have to use Orwall 1.1.0. Do not upgrade to 1.2.0 or networking will
+break.

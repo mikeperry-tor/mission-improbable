@@ -92,4 +92,4 @@ fi
 adb sideload ${DEVICE}-update-signed.zip
 
 echo
-echo "All done! Yay!"
+echo "All done! Yay! Select Reboot into System and press power."
