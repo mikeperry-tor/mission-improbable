@@ -14,6 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+#
+# Based on device_huawei_angler/releasetools.py.
+# Portions trimmed to remove deltas and zip file reading.
 
 import common
 import struct
