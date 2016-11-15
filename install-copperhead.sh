@@ -11,7 +11,8 @@ fi
 COPPERHEAD_DIR=$1
 
 echo
-echo "Please reboot into fastboot (Boot while holding Power and Volume Down) and hit enter"
+echo "Ensure that you have OEM unlocking enabled from Developer Options (see README.md)"
+echo "Then reboot into fastboot (Boot while holding Power and Volume Down) and hit enter"
 read junk
 
 cd $COPPERHEAD_DIR
