@@ -1,8 +1,8 @@
 ## Copperhead Tor Phone Prototype
 
-The pile of scripts in this directory help you create your own rooted
-Tor-enabled gapps capable Copperhead image that is signed with your own keys
-for verified boot.
+The scripts in this directory help you create your own rooted Tor-enabled
+gapps capable Copperhead image that is signed with your own keys for verified
+boot.
 
 ## Prerequisites
 
@@ -13,6 +13,12 @@ if fastboot supports the "fastboot flashing unlock" command.
 
 You also need a Java JRE/JDK 1.7 or higher, git, gcc, g++, and openssl
 development packages (libssl-dev or openssl-devel).
+
+Your phone also will need to have OEM Unlocking enabled from the "Developer
+Options" menu in order to unlock fastboot. Go to Settings->About Phone and
+click on Build Number 5 times to enable Developer Options. The Developer
+Options menu will appear in Settings, and the OEM Unlocking switch is present
+there.
 
 You need some other things, too, but the scripts will download them for you.
 Run ./run_all.sh with torsocks if you want to fetch that stuff via Tor.
@@ -36,8 +42,13 @@ $ tar -Jxvf angler-factory-2016.10.27.20.13.46.tar.xz
 $ ./run_all.sh angler-nbd90z ./helper-repos/
 ~~~~
 
+This installation script will generate device keys in the keys directory of
+the filesystem. You will need these keys to update the phone. Keep them safe,
+and do not lose them.
+
 To update your phone, download a new Copperhead Factory Image from website,
-and install it with update.sh.
+and install it with update.sh. Make sure you have your device keys in the
+keys subdirectory directory. Then run:
 
 ~~~~
 $ gpg angler-factory-2016.10.27.20.13.46.tar.xz.sig
@@ -45,7 +56,26 @@ $ tar -Jxvf angler-factory-2016.10.27.20.13.46.tar.xz
 $ ./update.sh angler-nbd90z ./helper-repos/ angler
 ~~~~
 
-## TODOs
+## Binary blobs that run on the host machine
+
+The following is a list of binary blobs we run on your machine during build.
+(XXX: Find and link to the sources for these).
+
+* ./extras/blobs/dumpkey.jar
+* ./extras/blobs/signapk.jar
+* ./extras/blobs/VeritySigner.jar
+* ../super-bootimg/scripts/bin/bootimg-extract
+* ../super-bootimg/scripts/bin/bootimg-repack
+* ../super-bootimg/scripts/bin/sepolicy-inject
+* ../super-bootimg/scripts/bin/strip-cpio
+
+## Binary blobs that run on the phone
+
+* ./extras/blobs/update-binary
+* ../super-bootimg/scripts/bin/su-arm
+* ./packages/gapps-delta.tar.xz (OpenGapps Pico)
+
+## TODOs and Future Work
 
 * We should probably have a script that does some dependency checking and
 helps the user install stuff they need to build and install everything.
@@ -75,27 +105,6 @@ also because some people might just want Gapps and not Root+Tor.
 Technically we could use make_ext4fs from the Android build tree, but it
 requires a block map, file permission lists, and selinux context lists. We
 would need some other tool to extract (or keep copies of) those..
-
-## Binary blobs that run on the host machine
-
-The following is a list of binary blobs we run on your machine during build.
-(XXX: Find and link to the sources for these).
-
-* ./extras/blobs/dumpkey.jar
-* ./extras/blobs/signapk.jar
-* ./extras/blobs/VeritySigner.jar
-* ../super-bootimg/scripts/bin/bootimg-extract
-* ../super-bootimg/scripts/bin/bootimg-repack
-* ../super-bootimg/scripts/bin/sepolicy-inject
-* ../super-bootimg/scripts/bin/strip-cpio
-
-## Binary blobs that run on the phone
-
-* ./extras/blobs/update-binary
-* ../super-bootimg/scripts/bin/su-arm
-* ./packages/gapps-delta.tar.xz (OpenGapps Pico)
-
-## Future Work
 
 * Back in the WhisperCore days, Moxie wrote a Netfilter module using libiptc
 that enabled apps to edit iptables rules if they had permissions for it. This
