@@ -29,5 +29,6 @@
   <app name="Twidere" package="org.mariotaku.twidere" />
   <app name="VLC" package="org.videolan.vlc" />
   <app name="World Weather" package="com.haringeymobile.ukweather" />
+  <app name="Wifi Privacy Police" package="be.uhasselt.privacypolice" />
   <app name="Xabber Dev" package="com.xabber.androiddev" />
 </app-list>
