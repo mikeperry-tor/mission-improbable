@@ -6,6 +6,7 @@
   <app name="Barcode Scanner" package="com.google.zxing.client.android" />
   <app name="Bitcoin Wallet" package="de.schildbach.wallet" />
   <app name="Calendar Import-Export" package="org.sufficientlysecure.ical" />
+  <app name="Conversations" package="eu.siacs.conversations" />
   <app name="Cool Reader" package="org.coolreader" />
   <app name="CSipSimple" package="com.csipsimple" />
   <app name="Firefox" package="org.mozilla.firefox" />
