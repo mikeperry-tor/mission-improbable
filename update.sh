@@ -2,16 +2,16 @@
 
 set -e
 
-if [ $# -ne 3 ]
+if [ $# -ne 2 ]
 then
-  echo "Usage: $0 <new_copperhead_factory_dir> <helper_dest_dir> <device_type>"
+  echo "Usage: $0 <new_copperhead_factory_dir> <device_type>"
   exit 1
 fi
 
 COPPERHEAD_DIR=$1
-SUPERBOOT_DIR=$2/super-bootimg
-SIMG2IMG_DIR=$2/android-simg2img
-DEVICE=$3
+SUPERBOOT_DIR=$PWD/helper-repos/super-bootimg
+SIMG2IMG_DIR=$PWD/helper-repos/android-simg2img
+DEVICE=$2
 
 if [ ! -f "./packages/gapps-delta.tar.xz" ]
 then

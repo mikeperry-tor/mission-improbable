@@ -23,4 +23,5 @@ echo "Please reboot phone into system. If you installed gapps, it will keep cras
 echo "until you give Google Play Services the location and storage permissions."
 echo "(under settings->Apps->Google Play Services->Permissions)."
 echo "Just click through the setup screen until you get past it to get into settings."
+echo "(But don't forget to set the clock properly or Orbot won't work)."
 read junk

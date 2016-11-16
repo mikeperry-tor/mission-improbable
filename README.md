@@ -39,7 +39,7 @@ this directory):
 ~~~~
 $ gpg angler-factory-2016.10.27.20.13.46.tar.xz.sig
 $ tar -Jxvf angler-factory-2016.10.27.20.13.46.tar.xz
-$ ./run_all.sh angler-nbd90z ./helper-repos/
+$ ./run_all.sh angler-nbd90z
 ~~~~
 
 This installation script will generate device keys in the keys directory of
@@ -53,7 +53,7 @@ keys subdirectory directory. Then run:
 ~~~~
 $ gpg angler-factory-2016.10.27.20.13.46.tar.xz.sig
 $ tar -Jxvf angler-factory-2016.10.27.20.13.46.tar.xz
-$ ./update.sh angler-nbd90z ./helper-repos/ angler
+$ ./update.sh angler-nbd90z angler
 ~~~~
 
 ## Binary blobs that run on the host machine

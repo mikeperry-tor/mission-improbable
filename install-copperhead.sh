@@ -11,8 +11,8 @@ fi
 COPPERHEAD_DIR=$1
 
 echo
-echo "Ensure that you have OEM unlocking enabled from Developer Options (see README.md)"
-echo "Then reboot into fastboot (Boot while holding Power and Volume Down) and hit enter"
+echo "Ensure OEM unlocking is enabled from Developer Options (see README.md)"
+echo "Then reboot into fastboot (Boot holding Power and Volume Down) and hit enter"
 read junk
 
 cd $COPPERHEAD_DIR
@@ -21,7 +21,7 @@ fastboot flashing unlock || true
 sleep 5
 
 echo
-echo "Ensure flashing is unlocked and hit enter"
+echo "Ensure device is unlocked and hit enter"
 read junk
 
 ./flash-base.sh
