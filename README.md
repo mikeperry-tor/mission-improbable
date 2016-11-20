@@ -4,6 +4,18 @@ The scripts in this directory help you create your own rooted Tor-enabled
 gapps capable Copperhead image that is signed with your own keys for verified
 boot.
 
+## Compatibility
+
+Only new devices supporting [Verified
+Boot](https://source.android.com/security/verifiedboot/) with
+user-controlled keys are compatible.
+
+| Device            | Status             |
+|-------------------|--------------------|
+| Google Nexus 6P   | :white_check_mark: |
+| Google Pixel [XL] | :question:         |
+| Everything else   | :x:                |
+
 ## Prerequisites
 
 You need a recent fastboot and adb from the command line tools package at the
