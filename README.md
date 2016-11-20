@@ -11,7 +11,7 @@ Boot](https://source.android.com/security/verifiedboot/) with
 user-controlled keys are compatible.
 
 | Device            | Status             |
-|-------------------|--------------------|
+|-------------------|:------------------:|
 | Google Nexus 6P   | :white_check_mark: |
 | Google Pixel [XL] | :question:         |
 | Everything else   | :x:                |
