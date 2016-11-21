@@ -46,8 +46,11 @@ mknod ${one} p
 mknod ${two} p
 chmod 0600 ${one} ${two}
 
-read -p "Enter password for '$1' (blank for none; password will be visible): " \
-  password
+# XXX: Passwords on keys are not supported by the verity signer..
+# See https://github.com/mikeperry-tor/mission-improbable/issues/6
+#read -p "Enter password for '$1' (blank for none; password will be visible): " \
+#  password
+password=""
 
 if [ "${3}" = "rsa" -o "$#" -eq 2 ]; then
   ( openssl genrsa -f4 2048 | tee ${one} > ${two} ) &
