@@ -73,9 +73,9 @@ $ ./update.sh angler-nbd90z angler
 The following is a list of binary blobs we run on your machine during build.
 (XXX: Find and link to the sources for these).
 
-* ./extras/blobs/dumpkey.jar
-* ./extras/blobs/signapk.jar
-* ./extras/blobs/VeritySigner.jar
+* [./extras/blobs/dumpkey.jar](https://android.googlesource.com/platform/bootable/recovery.git/+/master/tools/dumpkey)
+* [./extras/blobs/signapk.jar](https://android.googlesource.com/platform/build.git/+/master/tools/signapk/)
+* [./extras/blobs/VeritySigner.jar](https://android.googlesource.com/platform/system/extras/+/master/verity)
 * ../super-bootimg/scripts/bin/bootimg-extract
 * ../super-bootimg/scripts/bin/bootimg-repack
 * ../super-bootimg/scripts/bin/sepolicy-inject
