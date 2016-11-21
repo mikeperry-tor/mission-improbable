@@ -66,9 +66,9 @@ the [CopperheadOS download page][copperhead-download], and place it the
 git root directory.
 2. **Run** the following:
 
-    $ gpg angler-factory-2016.10.27.20.13.46.tar.xz.sig
-    $ tar -Jxvf angler-factory-2016.10.27.20.13.46.tar.xz
-    $ ./run_all.sh angler-nbd90z
+        $ gpg angler-factory-2016.10.27.20.13.46.tar.xz.sig
+        $ tar -Jxvf angler-factory-2016.10.27.20.13.46.tar.xz
+        $ ./run_all.sh angler-nbd90z
 
 **Note on keys:** This installation script will generate device keys in
 the `keys/` directory of the filesystem. You will need these keys to
@@ -81,9 +81,9 @@ update the phone. Keep them safe, and do not lose them.
    directory.
 3. **Run** the following:
 
-    $ gpg angler-factory-2016.10.27.20.13.46.tar.xz.sig
-    $ tar -Jxvf angler-factory-2016.10.27.20.13.46.tar.xz
-    $ ./update.sh angler-nbd90z angler
+        $ gpg angler-factory-2016.10.27.20.13.46.tar.xz.sig
+        $ tar -Jxvf angler-factory-2016.10.27.20.13.46.tar.xz
+        $ ./update.sh angler-nbd90z angler
 
 ### Binary blobs that run on the host machine
 
