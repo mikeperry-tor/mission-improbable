@@ -4,6 +4,9 @@ The scripts in this directory help you create your own rooted Tor-enabled
 gapps capable Copperhead image that is signed with your own keys for verified
 boot.
 
+For more background information, see:
+https://blog.torproject.org/blog/mission-improbable-hardening-android-security-and-privacy
+
 ### Compatibility
 
 Only new devices supporting [Verified
