@@ -4,7 +4,19 @@ The scripts in this directory help you create your own rooted Tor-enabled
 gapps capable Copperhead image that is signed with your own keys for verified
 boot.
 
-## Prerequisites
+### Compatibility
+
+Only new devices supporting [Verified
+Boot](https://source.android.com/security/verifiedboot/) with
+user-controlled keys are compatible.
+
+| Device            | Status             |
+|-------------------|:------------------:|
+| Google Nexus 6P   | :white_check_mark: |
+| Google Pixel [XL] | :question:         |
+| Everything else   | :x:                |
+
+### Prerequisites
 
 You need a recent fastboot and adb from the command line tools package at the
 bottom of https://developer.android.com/studio/index.html#downloads. The ones
@@ -23,7 +35,7 @@ there.
 You need some other things, too, but the scripts will download them for you.
 Run ./run_all.sh with torsocks if you want to fetch that stuff via Tor.
 
-## Instructions
+### Instructions
 
 There are a ton of scripts in here. Eventually, we want to make it possible to
 choose if you want Google Apps, SuperUser, Tor, or some subset. For now, the
@@ -56,7 +68,7 @@ $ tar -Jxvf angler-factory-2016.10.27.20.13.46.tar.xz
 $ ./update.sh angler-nbd90z angler
 ~~~~
 
-## Binary blobs that run on the host machine
+### Binary blobs that run on the host machine
 
 The following is a list of binary blobs we run on your machine during build.
 (XXX: Find and link to the sources for these).
@@ -69,13 +81,13 @@ The following is a list of binary blobs we run on your machine during build.
 * ../super-bootimg/scripts/bin/sepolicy-inject
 * ../super-bootimg/scripts/bin/strip-cpio
 
-## Binary blobs that run on the phone
+### Binary blobs that run on the phone
 
 * ./extras/blobs/update-binary
 * ../super-bootimg/scripts/bin/su-arm
 * ./packages/gapps-delta.tar.xz (OpenGapps Pico)
 
-## TODOs and Future Work
+### TODOs and Future Work
 
 * We should probably have a script that does some dependency checking and
 helps the user install stuff they need to build and install everything.
@@ -111,7 +123,7 @@ that enabled apps to edit iptables rules if they had permissions for it. This
 would eliminate the need for root and crazy iptables shell callouts for using
 OrWall. This should be more stable and less leaky than the current VPN apis.
 
-## Bugs
+### Bugs
 
 1. The swipe keyboard driver is not being recognized by Copperhead's LatinIME
 package due to the build pref
