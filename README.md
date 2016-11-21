@@ -10,14 +10,19 @@ https://blog.torproject.org/blog/mission-improbable-hardening-android-security-a
 ### Compatibility
 
 Only new devices supporting [Verified
-Boot](https://source.android.com/security/verifiedboot/) with
-user-controlled keys are compatible.
+Boot](https://source.android.com/security/verifiedboot/) with user-controlled
+keys are compatible. Additionally, the device has to be [supported by
+Copperhead](https://copperhead.co/android/downloads), and we need an [update
+script directory](https://github.com/mikeperry-tor/mission-improbable/tree/master/extras/angler) for updates to work.
 
-| Device            | Status             |
-|-------------------|:------------------:|
-| Google Nexus 6P   | :white_check_mark: |
-| Google Pixel [XL] | :question:         |
-| Everything else   | :x:                |
+
+| Device            | Installation       | Updates           |
+|-------------------|:------------------:|:-----------------:|
+| Google Nexus 6P   | :white_check_mark: | :white_check_mark:|
+| Google Nexus 5X   | :white_check_mark: | :question:        |
+| Google Nexus 9    | :x:                | :x:               |
+| Everything else   | :x:                | :x:               |
+
 
 ### Prerequisites
 
