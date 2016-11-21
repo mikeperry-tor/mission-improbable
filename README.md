@@ -8,7 +8,7 @@ boot.
 For more background information, see:
 https://blog.torproject.org/blog/mission-improbable-hardening-android-security-and-privacy
 
-### Compatibility
+## Compatibility
 
 Only new devices supporting [Verified
 Boot](https://source.android.com/security/verifiedboot/) with
@@ -25,7 +25,7 @@ we need an [update script directory](extras/angler) for updates to work.
 | Everything else   | :x:                | :x:               |
 
 
-### Prerequisites
+## Prerequisites
 
 * **`fastboot` & `adb`.** You need recent versions from the [official
   command line tools installer][cli-download]. The ones in
@@ -48,7 +48,7 @@ To ensure the these downloads are fetched via Tor:
 
     torsocks ./run_all.sh
 
-### Instructions
+## Instructions
 
 There are a ton of scripts in here. Eventually, we want to make it possible to
 choose if you want Google Apps, SuperUser, Tor, or some subset. For now, the
@@ -59,7 +59,7 @@ individually.
 
 Below is an example for the `angler` build:
 
-#### Install
+### Install
 
 1. **Download** your factory image and its signature from
 the [CopperheadOS download page][copperhead-download], and place it the
@@ -74,7 +74,7 @@ git root directory.
 the `keys/` directory of the filesystem. You will need these keys to
 update the phone. Keep them safe, and do not lose them.
 
-#### Update
+### Update
 
 1. **Download** a new Copperhead image as above,
 2. **Prepare your device keys.** Make sure they are in the `keys/`
@@ -85,7 +85,7 @@ update the phone. Keep them safe, and do not lose them.
         $ tar -Jxvf angler-factory-2016.10.27.20.13.46.tar.xz
         $ ./update.sh angler-nbd90z angler
 
-### Binary blobs that run on the host machine
+## Binary blobs that run on the host machine
 
 The following is a list of binary blobs we run on your machine during build.
 (XXX: Find and link to the sources for these).
@@ -98,13 +98,13 @@ The following is a list of binary blobs we run on your machine during build.
 * `../super-bootimg/scripts/bin/sepolicy-inject`
 * `../super-bootimg/scripts/bin/strip-cpio`
 
-### Binary blobs that run on the phone
+## Binary blobs that run on the phone
 
 * `./extras/blobs/update-binary`
 * `../super-bootimg/scripts/bin/su-arm`
 * `./packages/gapps-delta.tar.xz` (OpenGapps Pico)
 
-### TODOs and Future Work
+## TODOs and Future Work
 
 * We should probably have a script that does some dependency checking and
 helps the user install stuff they need to build and install everything.
@@ -140,7 +140,7 @@ that enabled apps to edit iptables rules if they had permissions for it. This
 would eliminate the need for root and crazy iptables shell callouts for using
 OrWall. This should be more stable and less leaky than the current VPN apis.
 
-### Bugs
+## Bugs
 
 1. The swipe keyboard driver is not being recognized by Copperhead's LatinIME
 package due to the build pref
