@@ -73,7 +73,7 @@ else
   echo "creating ${1}.pk8 with password [${password}]"
   export password
   openssl pkcs8 -in ${one} -topk8 -outform DER -out $1.pk8 \
-    -passout env:password
+    -passout env:password -v2 "aes-256-cbc"
   unset password
 fi
 
