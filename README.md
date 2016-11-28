@@ -33,6 +33,7 @@ Debian/stable are sadly too old :(. You can tell if yours is recent
 enough if fastboot supports the `fastboot flashing unlock` command.
 * **Java JRE/JDK 1.7+**
 * `git`
+* `cpio`
 * `gcc`, `g++`
 * **openssl development packages.** ie. `libssl-dev`/`openssl-devel`
 
