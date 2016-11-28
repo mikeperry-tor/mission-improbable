@@ -38,6 +38,7 @@ enough if fastboot supports the `fastboot flashing unlock` command.
 * **openssl development packages.** ie. `libssl-dev`/`openssl-devel`
 
 Your phone also will need to have **OEM Unlocking** enabled:
+
 1. Go to *Settings > About Phone*.
 2. Tap *Build Number* five times.
 3. Go to newly created *Settings > Developer Options*
