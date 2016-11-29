@@ -36,7 +36,7 @@ fi
 if [ "$@" = "--twrp" ]; then
   TWRP=true
   wget "https://dl.twrp.me/${DEVICE}/twrp-3.0.2-2-${DEVICE}.img"
-  fastboot flash recovery twrp-*.img
+  fastboot flash recovery twrp-*-${DEVICE}.img
 fi
 
 for i in "${OPENLIST[@]}"
@@ -48,7 +48,7 @@ do
 	fastboot reboot-recovery
 	adb sideload open_gapps-*.zip
       else
-	fastboot flash recovery twrp-*.img
+	fastboot flash recovery twrp-*-${DEVICE}.img
 	fastboot reboot-recovery
 	adb sideload open_gapps-*.zip
 	adb reboot-bootloader
