@@ -40,7 +40,7 @@ fi
 
 if [[ "$@" = "--twrp" ]]; then
   TWRP=true
-  fastboot flash recovery twrps/twrp-*-${DEVICE}.img
+  fastboot flash recovery extras/twrps/twrp-*-${DEVICE}.img
 fi
 
 for i in "${OPENLIST[@]}"
@@ -52,11 +52,11 @@ do
 	fastboot reboot-recovery
 	adb sideload open_gapps-*.zip
       else
-	fastboot flash recovery twrp-*-${DEVICE}.img
+	fastboot flash recovery extras/twrps/twrp-*-${DEVICE}.img
 	fastboot reboot-recovery
 	adb sideload open_gapps-*.zip
 	adb reboot-bootloader
-	fastboot flash recovery $COPPERHEAD_DIR/recovery.img
+	fastboot flash recovery $COPPERHEAD_DIR/images/recovery.img
       fi
     fi
 done
