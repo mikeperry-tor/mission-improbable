@@ -7,6 +7,7 @@ if [ $# -lt 2 ]; then
   echo "Options: [ --spoof | enables signature spoofing ]"
   echo "[ --[<package>] | installs the specified OpenGApps package ]"
   echo "[ --twrp | flashes TWRP recovery to the device ]"
+  echo "[ --update | updates current system, don't use both GApps and this ]"
   echo "Devices: angler | bullhead"
   echo "Packages: see www.opengapps.org"
   exit 1
@@ -27,11 +28,15 @@ if [ ! -f ./keys/verity_key.pub ]; then
   cd -
 fi
 
-./install-copperhead.sh $COPPERHEAD_DIR
-./install-su.sh $COPPERHEAD_DIR $SUPERBOOT_DIR
-./re-sign.sh $COPPERHEAD_DIR $SIMG2IMG_DIR $SUPERBOOT_DIR
-./flash-signed.sh
-./install-packages.sh
+if [ "$@" != "--update" ]; then
+  ./install-copperhead.sh $COPPERHEAD_DIR
+  ./install-su.sh $COPPERHEAD_DIR $SUPERBOOT_DIR
+  ./re-sign.sh $COPPERHEAD_DIR $SIMG2IMG_DIR $SUPERBOOT_DIR
+  ./flash-signed.sh
+  ./install-packages.sh
+else
+  ./update.sh
+fi
 
 if [ "$@" = "--twrp" ]; then
   TWRP=true
@@ -58,18 +63,18 @@ do
 done
 
 if [ "$@" = "--spoof" ]; then
-while true; do
-    echo "To spoof signatures, you need root on the device or TWRP installed!"
-    echo "Java, Python and ADB are also required! I highly recommend booting into TWRP!"
-    read -p "Are you sure you want to enable signature spoofing? (y/n)" yn
-    case $yn in
-        [Yy]* ) echo "You have been warned, proceeding..."; ./spoof-signatures.sh;;
-        [Nn]* ) echo "Smart man, skipping..."; break;;
-        * ) echo "Please answer y or n.";;
-    esac
-done
+  while true; do
+      echo "To spoof signatures, you need root on the device or TWRP installed!"
+      echo "Java, Python and ADB are also required! I highly recommend booting into TWRP!"
+      read -p "Are you sure you want to enable signature spoofing? (y/n)" yn
+      case $yn in
+          [Yy]* ) echo "You have been warned, proceeding..."; ./spoof-signatures.sh;;
+          [Nn]* ) echo "Smart man, skipping..."; break;;
+          * ) echo "Please answer y or n.";;
+      esac
+  done
 else
-echo "Skipping signature spoofing."
+  echo "Skipping signature spoofing."
 fi
 
 echo
