@@ -4,7 +4,8 @@ set -e
 
 if [ $# -ne 1 -a $# -ne 3 ]
 then
-  echo "Usage: $0 <copperhead_factory_dir> [<gapps.zip>] [<twrp.img>]"
+  echo "Usage: $0 <copperhead_factory_dir> [<gapps.zip>] [<twrp.img>] [<options>]"
+  echo "Options: [ --spoof | enables signature spoofing ]"
   exit 1
 fi
 
@@ -39,6 +40,21 @@ fi
 ./flash-signed.sh
 
 ./install-packages.sh
+
+if [ "$@" = "--spoof" ]; then
+while true; do
+    echo "To spoof signatures, you need root on the device or TWRP installed!"
+    echo "Java, Python and ADB are also required! I highly recommend booting into TWRP!"
+    read -p "Are you sure you want to enable signature spoofing? (y/n)" yn
+    case $yn in
+        [Yy]* ) echo "You have been warned, proceeding..."; ./spoof-signatures.sh;;
+        [Nn]* ) echo "Smart man, skipping..."; break;;
+        * ) echo "Please answer y or n.";;
+    esac
+done
+else
+echo "Skipping signature spoofing."
+fi
 
 echo
 echo "All done! Yay!"
