@@ -3,7 +3,7 @@
 set -e
 
 if [ $# -lt 2 ]; then
-  echo "Usage: $0 <copperhead_factory_dir> [<device>] [<options>]"
+  echo "Usage: $0 <copperhead_factory_dir> <device> [<options>]"
   echo "Options: [ --spoof | enables signature spoofing ]"
   echo "[ --[<package>] | installs the specified OpenGApps package ]"
   echo "[ --twrp | flashes TWRP recovery to the device ]"
@@ -28,14 +28,14 @@ if [ ! -f ./keys/verity_key.pub ]; then
   cd -
 fi
 
-if [ "$@" != "--update" ]; then
+if [ "$@" = "--update" ]; then
+  ./update.sh
+else
   ./install-copperhead.sh $COPPERHEAD_DIR
   ./install-su.sh $COPPERHEAD_DIR $SUPERBOOT_DIR
   ./re-sign.sh $COPPERHEAD_DIR $SIMG2IMG_DIR $SUPERBOOT_DIR
   ./flash-signed.sh
   ./install-packages.sh
-else
-  ./update.sh
 fi
 
 if [ "$@" = "--twrp" ]; then
