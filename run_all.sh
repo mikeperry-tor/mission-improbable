@@ -28,7 +28,7 @@ if [ ! -f ./keys/verity_key.pub ]; then
   cd -
 fi
 
-if [ "$@" = "--update" ]; then
+if [[ "$@" = "--update" ]]; then
   ./update.sh
 else
   ./install-copperhead.sh $COPPERHEAD_DIR
@@ -38,15 +38,14 @@ else
   ./install-packages.sh
 fi
 
-if [ "$@" = "--twrp" ]; then
+if [[ "$@" = "--twrp" ]]; then
   TWRP=true
-  wget "https://dl.twrp.me/${DEVICE}/twrp-3.0.2-2-${DEVICE}.img"
-  fastboot flash recovery twrp-*-${DEVICE}.img
+  fastboot flash recovery twrps/twrp-*-${DEVICE}.img
 fi
 
 for i in "${OPENLIST[@]}"
 do
-    if [ "$i" == "$@" ] ; then
+    if [[ "$i" == "$@" ]] ; then
       PACKAGE=$i
       wget "https://github.com/opengapps/arm64/releases/download/20161129/open_gapps-arm64-7.0-${PACKAGE}-20161129.zip"
       if [ $TWRP ]; then
@@ -62,7 +61,7 @@ do
     fi
 done
 
-if [ "$@" = "--spoof" ]; then
+if [[ "$@" = "--spoof" ]]; then
   while true; do
       echo "To spoof signatures, you need root on the device or TWRP installed!"
       echo "Java, Python and ADB are also required! I highly recommend booting into TWRP!"
