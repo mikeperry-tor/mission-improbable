@@ -19,6 +19,7 @@ SUPERBOOT_DIR=$PWD/helper-repos/super-bootimg
 SIMG2IMG_DIR=$PWD/helper-repos/android-simg2img
 OPENLIST="aroma super stock full mini micro nano pico"
 
+./checktools.sh
 ./clone-helper-repos.sh $SUPERBOOT_DIR $SIMG2IMG_DIR
 ./fetch-apks.sh
 
