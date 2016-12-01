@@ -2,43 +2,80 @@
 
 set -e
 
-if [ $# -ne 1 -a $# -ne 3 ]
-then
-  echo "Usage: $0 <copperhead_factory_dir> [<gapps.zip>] [<twrp.img>]"
+if [ $# -lt 2 ]; then
+  echo "Usage: $0 <copperhead_factory_dir> <device> [<options>]"
+  echo "Options: [ --spoof | enables signature spoofing ]"
+  echo "[ --[<package>] | installs the specified OpenGApps package ]"
+  echo "[ --twrp | flashes TWRP recovery to the device ]"
+  echo "[ --update | updates current system, don't use both GApps and this ]"
+  echo "Devices: angler | bullhead"
+  echo "Packages: see www.opengapps.org"
   exit 1
 fi
 
 COPPERHEAD_DIR=$1
+DEVICE=$2
 SUPERBOOT_DIR=$PWD/helper-repos/super-bootimg
 SIMG2IMG_DIR=$PWD/helper-repos/android-simg2img
-GAPPS_ZIP=$2
-TWRP_IMG=$3
+OPENLIST="aroma super stock full mini micro nano pico"
 
+./checktools.sh
 ./clone-helper-repos.sh $SUPERBOOT_DIR $SIMG2IMG_DIR
 ./fetch-apks.sh
 
-if [ ! -f ./keys/verity_key.pub ];
-then
+if [ ! -f ./keys/verity_key.pub ]; then
   cd keys
   ./make_keys.sh $SIMG2IMG_DIR
   cd -
 fi
 
-./install-copperhead.sh $COPPERHEAD_DIR
-./install-su.sh $COPPERHEAD_DIR $SUPERBOOT_DIR
-
-if [ -f "./packages/gapps-delta.tar.xz" ];
-then
-  ./apply-gapps-delta.sh $COPPERHEAD_DIR $SIMG2IMG_DIR
+if [[ "$@" = "--update" ]]; then
+  ./update.sh
 else
-  ./install-gapps.sh $TWRP_IMG $GAPPS_ZIP
+  ./install-copperhead.sh $COPPERHEAD_DIR
+  ./install-su.sh $COPPERHEAD_DIR $SUPERBOOT_DIR
+  ./re-sign.sh $COPPERHEAD_DIR $SIMG2IMG_DIR $SUPERBOOT_DIR
+  ./flash-signed.sh
+  ./install-packages.sh
 fi
 
-./re-sign.sh $COPPERHEAD_DIR $SIMG2IMG_DIR $SUPERBOOT_DIR
+if [[ "$@" = "--twrp" ]]; then
+  TWRP=true
+  fastboot flash recovery extras/twrps/twrp-*-${DEVICE}.img
+fi
 
-./flash-signed.sh
+for i in "${OPENLIST[@]}"
+do
+    if [[ "$i" == "$@" ]] ; then
+      PACKAGE=$i
+      wget "https://github.com/opengapps/arm64/releases/download/20161129/open_gapps-arm64-7.0-${PACKAGE}-20161129.zip"
+      if [ $TWRP ]; then
+	fastboot reboot-recovery
+	adb sideload open_gapps-*.zip
+      else
+	fastboot flash recovery extras/twrps/twrp-*-${DEVICE}.img
+	fastboot reboot-recovery
+	adb sideload open_gapps-*.zip
+	adb reboot-bootloader
+	fastboot flash recovery $COPPERHEAD_DIR/images/recovery.img
+      fi
+    fi
+done
 
-./install-packages.sh
+if [[ "$@" = "--spoof" ]]; then
+  while true; do
+      echo "To spoof signatures, you need root on the device or TWRP installed!"
+      echo "Java, Python and ADB are also required! I highly recommend booting into TWRP!"
+      read -p "Are you sure you want to enable signature spoofing? (y/n)" yn
+      case $yn in
+          [Yy]* ) echo "You have been warned, proceeding..."; ./spoof-signatures.sh;;
+          [Nn]* ) echo "Smart man, skipping..."; break;;
+          * ) echo "Please answer y or n.";;
+      esac
+  done
+else
+  echo "Skipping signature spoofing."
+fi
 
 echo
 echo "All done! Yay!"
