@@ -54,7 +54,7 @@ cp ./images/system-signed.raw ./update/
 cp ./images/vendor-signed.raw ./update/
 cp ./images/boot-signed.img ./update/
 cp ./images/recovery-signed.img ./update/
-./extras/${DEVICE}/convert-factory.py $COPPERHEAD_DIR/radio-*.img $COPPERHEAD_DIR/bootloader-*.img ./update
+python ./extras/${DEVICE}/convert-factory.py $COPPERHEAD_DIR/radio-*.img $COPPERHEAD_DIR/bootloader-*.img ./update
 
 cd update
 mkdir -p META-INF/com/google/android/
