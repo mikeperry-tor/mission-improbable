@@ -61,8 +61,8 @@ mkdir -p META-INF/com/google/android/
 mkdir -p META-INF/com/android/
 
 cp ../extras/${DEVICE}/updater-script META-INF/com/google/android/updater-script
-cp ../extras/blobs/update-binary META-INF/com/google/android/
-cp ../extras/metadata META-INF/com/android
+cp ../extras/${DEVICE}/update-binary META-INF/com/google/android/
+cp ../extras/${DEVICE}/metadata META-INF/com/android
 
 # XXX: bootloader.. not sure how to do that..
 
