@@ -20,7 +20,7 @@ we need an [update script directory](extras/angler) for updates to work.
 | Device            | Installation       | Updates           |
 |-------------------|:------------------:|:-----------------:|
 | Google Nexus 6P   | :white_check_mark: | :white_check_mark:|
-| Google Nexus 5X   | :white_check_mark: | :question:        |
+| Google Nexus 5X   | :white_check_mark: | :white_check_mark:|
 | Google Nexus 9    | :x:                | :x:               |
 | Everything else   | :x:                | :x:               |
 

@@ -54,15 +54,15 @@ cp ./images/system-signed.raw ./update/
 cp ./images/vendor-signed.raw ./update/
 cp ./images/boot-signed.img ./update/
 cp ./images/recovery-signed.img ./update/
-./extras/${DEVICE}/convert-factory.py $COPPERHEAD_DIR/radio-*.img $COPPERHEAD_DIR/bootloader-*.img ./update
+python ./extras/${DEVICE}/convert-factory.py $COPPERHEAD_DIR/radio-*.img $COPPERHEAD_DIR/bootloader-*.img ./update
 
 cd update
 mkdir -p META-INF/com/google/android/
 mkdir -p META-INF/com/android/
 
 cp ../extras/${DEVICE}/updater-script META-INF/com/google/android/updater-script
-cp ../extras/blobs/update-binary META-INF/com/google/android/
-cp ../extras/metadata META-INF/com/android
+cp ../extras/${DEVICE}/update-binary META-INF/com/google/android/
+cp ../extras/${DEVICE}/metadata META-INF/com/android
 
 # XXX: bootloader.. not sure how to do that..
 
