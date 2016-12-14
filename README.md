@@ -32,12 +32,13 @@ we need an [update script directory](extras/angler) for updates to work.
 Debian/stable are sadly too old :(. You can tell if yours is recent
 enough if fastboot supports the `fastboot flashing unlock` command.
 * **Java JRE/JDK 1.7+**
-* `git`
-* `cpio`
-* `gcc`, `g++`
+* `git`, `cpio`, `gcc`, `g++`
 * **openssl development packages.** ie. `libssl-dev`/`openssl-devel`
 
-Your phone also will need to have **OEM Unlocking** enabled:
+[Configure udev][udev-configuration] on your Linux system so you can use 
+`fastboot` and `adb` as non-root.
+
+Your phone will need to have **OEM Unlocking** enabled:
 
 1. Go to *Settings > About Phone*.
 2. Tap *Build Number* five times.
@@ -68,6 +69,7 @@ the [CopperheadOS download page][copperhead-download], and place it the
 git root directory.
 2. **Run** the following:
 
+        $ gpg --recv-keys 65EEFE022108E2B708CBFCF7F9E712E59AF5F22A
         $ gpg angler-factory-2016.10.27.20.13.46.tar.xz.sig
         $ tar -Jxvf angler-factory-2016.10.27.20.13.46.tar.xz
         $ ./run_all.sh angler-nbd90z
@@ -157,3 +159,4 @@ break.
 <!-- Links -->
    [cli-download]:        https://developer.android.com/studio/index.html#linux-bundle
    [copperhead-download]: https://copperhead.co/android/downloads
+   [udev-configuration]: https://developer.android.com/studio/run/device.html
