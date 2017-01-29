@@ -42,4 +42,4 @@ done
 cd ..
 
 echo
-echo "Copperhead successfully installed!"
+echo "Base Copperhead successfully installed (more steps remain)..."
