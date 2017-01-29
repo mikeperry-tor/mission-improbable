@@ -1,5 +1,7 @@
 #! /usr/bin/env python
 
+from __future__ import print_function
+
 import os
 import sys
 import struct
@@ -13,7 +15,7 @@ METADATA_SIZE = BLOCK_SIZE * 8
 
 def run(cmd):
     status, output = commands.getstatusoutput(cmd)
-    print output
+    print(output)
     if status:
         exit(-1)
 
@@ -33,7 +35,7 @@ def sign_verity_table(table, signer_path, key_path):
             table_file.write(table)
             table_file.flush()
             cmd = " ".join((signer_path, table_file.name, key_path, signature_file.name))
-            print cmd
+            print(cmd)
             run(cmd)
             return signature_file.read()
 
@@ -63,7 +65,7 @@ def build_verity_metadata(data_blocks, metadata_image, root_hash,
 
 if __name__ == "__main__":
     if len(sys.argv) == 3 and sys.argv[1] == "-s":
-        print get_verity_metadata_size(int(sys.argv[2]))
+        print(get_verity_metadata_size(int(sys.argv[2])))
     elif len(sys.argv) == 8:
         data_image_blocks = int(sys.argv[1]) / 4096
         metadata_image = sys.argv[2]
