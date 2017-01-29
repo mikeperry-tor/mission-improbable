@@ -14,22 +14,46 @@ import hashlib
 import os
 import sys
 
+def recursive_listdir(d):
+    full_list = []
+
+    cur = os.getcwd()
+    os.chdir(d)
+
+    for root, dirs, files in os.walk("."):
+        for dr in dirs:
+            full_list.append(os.path.normpath(os.path.join(root, dr)))
+        for fl in files:
+            full_list.append(os.path.normpath(os.path.join(root, fl)))
+
+    os.chdir(cur)
+    return full_list
+
 # aka changed
 def changed_in_b(a, b):
-    both = set(os.listdir(a)).intersection(set(os.listdir(b)))
+    both = set(recursive_listdir(a)).intersection(set(recursive_listdir(b)))
     changed = []
 
     fha, fhb = None, None
 
     for filename in both:
-        fna = os.sep.join([os.path.realpath(os.path.dirname(a)), a, filename])
-        fnb = os.sep.join([os.path.realpath(os.path.dirname(b)), b, filename])
+        fna = os.path.normpath(os.sep.join([a, filename]))
+        fnb = os.path.normpath(os.sep.join([b, filename]))
 
-        fha = open(fna)
-        fhb = open(fnb)
+        if os.path.isdir(fna) and os.path.isdir(fnb):
+          continue
 
-        a_data = fha.read()
-        b_data = fhb.read()
+        if os.path.islink(fna):
+          a_data = os.readlink(fna)
+        else:
+          fha = open(fna)
+          a_data = fha.read()
+
+        if os.path.islink(fnb):
+          b_data = os.readlink(fnb)
+        else:
+          fhb = open(fnb)
+          b_data = fhb.read()
 
         fhh = hashlib.sha256(a_data).hexdigest()
         fhg = hashlib.sha256(b_data).hexdigest()
@@ -48,27 +72,27 @@ def changed_in_b(a, b):
             
 # aka removed
 def in_a_not_b(a, b):
-    a_contents = os.listdir(a)
-    b_contents = os.listdir(b)
+    a_contents = recursive_listdir(a)
+    b_contents = recursive_listdir(b)
 
     diff = list(set(a_contents).difference(set(b_contents)))
     files = []
 
     for fn in diff:
-        files.append(os.path.realpath(os.sep.join([a, fn])))
+        files.append(os.path.normpath(os.sep.join([b, fn])))
 
     return files
 
 # aka added
 def in_b_not_a(a, b):
-    a_contents = os.listdir(a)
-    b_contents = os.listdir(b)
+    a_contents = recursive_listdir(a)
+    b_contents = recursive_listdir(b)
 
     diff = list(set(b_contents).difference(set(a_contents)))
     files = []
 
     for fn in diff:
-        files.append(os.path.realpath(os.sep.join([b, fn])))
+        files.append(os.path.normpath(os.sep.join([b, fn])))
 
     return files
 
