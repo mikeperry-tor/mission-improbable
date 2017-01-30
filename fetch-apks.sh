@@ -19,4 +19,7 @@ do
   gpg --homedir=. --no-default-keyring --keyring=gpgkeys.keyring $i
 done
 
+# XXX: hrmm.. this is pretty dirty...
+ln -sf gapps-delta-arm64-7.1-nano-20170127.tar.xz gapps-delta.tar.xz
+
 cd -
