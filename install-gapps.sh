@@ -10,16 +10,19 @@ fi
 
 TWRP_IMAGE=$1
 GAPPS_ZIP=$2
+# XXX: Make this an arg?
 SIMG2IMG_DIR=$PWD/helper-repos/android-simg2img
 
 echo
-echo "Ensure the fastboot bootloader is ready and hit enter."
+echo "Ensure the fastboot bootloader is ready."
+echo -n "[Hit Enter to continue...]"
 read junk
 
 fastboot flashing unlock || true
 
 echo
-echo "Ensure flashing is unlocked and hit enter"
+echo "Ensure flashing is unlocked."
+echo -n "[Hit Enter to continue...]"
 read junk
 
 fastboot flash recovery $TWRP_IMAGE
@@ -31,6 +34,7 @@ echo
 echo "If the recovery tries to reboot due to an error, do not let the system"
 echo "boot! Reboot into the bootloader immediately and enter recovery again."
 echo "(Otherwise, OpenGapps won't install properly)."
+echo -n "[Hit Enter to continue...]"
 read junk
 
 # Bleh. Sometimes you need to plug the device in again..
@@ -38,7 +42,7 @@ if [ -z "$(adb devices | grep sideload)" ]
 then
   echo
   echo "You need to unplug and replug your device after starting sideload.."
-  echo "Hit enter once you have started sideload from the recovery."
+  echo -n "[Hit Enter to continue...]"
   read junk
 fi
 
@@ -47,8 +51,9 @@ adb sideload $GAPPS_ZIP
 if [ -z "$(adb devices | grep recovery)" ]
 then
   echo
-  echo "Ensure recovery screen is not locked (swipe to unlock) and hit enter."
+  echo "Ensure recovery screen is not locked (swipe to unlock)."
   echo "You may need to unplug and replug your device again..."
+  echo -n "[Hit Enter to continue...]"
   read junk
 fi
 

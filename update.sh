@@ -25,10 +25,6 @@ then
   exit 1
 fi
 
-echo "WARNING: This update script may contain bugs."
-echo "Proceed at your own risk!"
-read junk
-
 cd $COPPERHEAD_DIR
 mkdir -p images
 cd images
@@ -77,15 +73,17 @@ echo "Now please reboot your device into recovery:"
 echo "  1. Reboot into Fastboot with Power + Volume Down"
 echo "  2. Use Volume Down to select Recovery, and press Power"
 echo "  3. Briefly tap Power + Volume-Up to get past the broken android logo."
+echo -n "[Hit Enter to continue...]"
 read junk
 echo "Now select 'Apply Update from ADB' with Volume Down, and press Power."
+echo -n "[Hit Enter to continue...]"
 read junk
 
 if [ -z "$(adb devices | grep sideload)" ]
 then
   echo
   echo "You need to unplug and replug your device after starting sideload.."
-  echo "Hit enter once you have started sideload from the recovery."
+  echo -n "[Hit Enter to continue...]"
   read junk
 fi
 
