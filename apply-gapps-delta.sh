@@ -34,8 +34,9 @@ echo "We now need sudo to mount the system image and apply the delta"
 
 sudo mount ./images/system.img.raw ./images/system
 cd images
-# Remove old files that gapps removes
-for file in `cat ../gapps_removelist.txt`
+# Remove old files that opengapps removes (sort -r ensures parent directories are
+# deleted last)
+for file in `sort -r ../gapps_removelist.txt`
 do
   if [ -d $file ]; then
     sudo rm -fd $file
