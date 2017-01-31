@@ -20,6 +20,6 @@ do
 done
 
 # XXX: hrmm.. this is pretty dirty...
-ln -sf gapps-delta-arm64-7.1-nano-20170127.tar.xz gapps-delta.tar.xz
+ln -sf gapps-delta-arm64-7.1-micro-20170129.tar.xz gapps-delta.tar.xz
 
 cd -
