@@ -13,11 +13,11 @@ SUPERBOOT_DIR=$PWD/helper-repos/super-bootimg
 SIMG2IMG_DIR=$PWD/helper-repos/android-simg2img
 DEVICE=$2
 
-if [ ! -f "./packages/gapps-delta.tar.xz" ]
-then
-  echo "You have to have a gapps-delta zip from a previous install :("
-  exit 1
-fi
+#if [ ! -f "./packages/gapps-delta.tar.xz" ]
+#then
+#  echo "You have to have a gapps-delta zip from a previous install :("
+#  exit 1
+#fi
 
 if [ ! -f "./extras/${DEVICE}/updater-script" ]
 then
@@ -36,6 +36,7 @@ fi
 
 cd ../..
 
+./fetch-apks.sh
 ./install-su.sh $COPPERHEAD_DIR $SUPERBOOT_DIR
 
 ./apply-gapps-delta.sh $COPPERHEAD_DIR $SIMG2IMG_DIR
