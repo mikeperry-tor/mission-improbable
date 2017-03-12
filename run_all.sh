@@ -24,13 +24,14 @@ then
   cd -
 fi
 
-./install-copperhead.sh $COPPERHEAD_DIR
 ./install-su.sh $COPPERHEAD_DIR $SUPERBOOT_DIR
 
-if [ -f "./packages/gapps-delta.tar.xz" ];
+if [ ! -f "$TWRP_IMG" -o ! -f "$GAPPS_ZIP" ];
 then
   ./apply-gapps-delta.sh $COPPERHEAD_DIR $SIMG2IMG_DIR
 else
+  # XXX: Ok to run after install-su.sh?
+  ./install-copperhead.sh $COPPERHEAD_DIR
   ./install-gapps.sh $TWRP_IMG $GAPPS_ZIP
 fi
 

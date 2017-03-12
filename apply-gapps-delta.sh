@@ -34,14 +34,17 @@ echo "We now need sudo to mount the system image and apply the delta"
 
 sudo mount ./images/system.img.raw ./images/system
 cd images
-# Remove old files that gapps removes
-sudo rm -rf system/priv-app/ConfigUpdater/oat
-sudo rm -rf system/priv-app/ExtServices
-sudo rm -rf system/priv-app/HotwordEnrollment
-sudo rm -rf system/priv-app/OneTimeInitializer
-sudo rm -rf system/priv-app/Provision
-sudo rm -rf system/lib/libfilterpack_facedetect.so
-sudo rm -rf system/lib64/libfilterpack_facedetect.so
+# Remove old files that opengapps removes (sort -r ensures parent directories are
+# deleted last)
+for file in `sort -r ../gapps_removelist.txt`
+do
+  if [ -d $file ]; then
+    sudo rm -fd $file
+  else
+    sudo rm -f $file
+  fi
+done
+
 sudo tar --selinux -Jxvf ../packages/gapps-delta.tar.xz
 sudo umount ./system
 cd ..

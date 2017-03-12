@@ -4,7 +4,7 @@ echo
 echo "Please enable adb debugging (enable developer mode by clicking 5 times on"
 echo "Settings->About Phone->Build number, and then click"
 echo "Developer options->enable USB Debugging.)"
-echo "When this is done, hit enter."
+echo -n "[Hit Enter to continue...]"
 read junk
 
 if [ -z "$(adb devices | grep "device$")" ]
@@ -12,6 +12,7 @@ then
   echo
   echo "You have to disconnect and reconnect USB and authorize the"
   echo "debugging connection.."
+  echo -n "[Hit Enter to continue...]"
   read junk
 fi
 

@@ -12,7 +12,8 @@ COPPERHEAD_DIR=$1
 
 echo
 echo "Ensure OEM unlocking is enabled from Developer Options (see README.md)"
-echo "Then reboot into fastboot (Boot holding Power and Volume Down) and hit enter"
+echo "Then reboot into fastboot (Boot holding Power and Volume Down)"
+echo -n "[Hit Enter to continue...]"
 read junk
 
 cd $COPPERHEAD_DIR
@@ -21,7 +22,8 @@ fastboot flashing unlock || true
 sleep 5
 
 echo
-echo "Ensure device is unlocked and hit enter"
+echo "Ensure fastboot is unlocked.."
+echo -n "[Hit Enter to continue...]"
 read junk
 
 ./flash-base.sh
@@ -42,4 +44,4 @@ done
 cd ..
 
 echo
-echo "Copperhead successfully installed!"
+echo "Base Copperhead successfully installed (more steps remain)..."
