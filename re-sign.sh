@@ -89,12 +89,18 @@ cp $KEYS_PATH/verity_key.pub ./verity_key
 echo "res/keys verity_key" |tr ' ' '\n' | cpio -o -H newc > ramdisk2
 
 rm -f cpio-*
+rm -f *.cpio
 
 $SUPERBOOT_PATH/scripts/bin/strip-cpio ramdisk1 res/keys verity_key
-cat cpio-* ramdisk2 |gzip -9 -c > "$RECOVERYRAMDISK_DIR"/ramdisk.gz
+for i in cpio-*
+do
+  mv $i `echo $i | cut -d- -f2`.cpio
+done
+cat `ls -1 *.cpio | sort -n` ramdisk2 |gzip -9 -c > "$RECOVERYRAMDISK_DIR"/ramdisk.gz
 
 cd $RECOVERYRAMDISK_DIR
 rm -f cpio-*
+rm -rf *.cpio
 $SUPERBOOT_PATH/scripts/bin/bootimg-repack $IMAGES_PATH/recovery.img
 
 java -jar $SUPERBOOT_PATH/scripts/keystore_tools/BootSignature.jar /recovery new-boot.img $KEYS_PATH/verity.pk8 $KEYS_PATH/verity.x509.pem $IMAGES_PATH/recovery-signed.img
