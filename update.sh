@@ -142,6 +142,8 @@ then
   echo "You need to unplug and replug your device after starting sideload.."
   echo -n "[Hit Enter to continue...]"
   read junk
+  # A sleep is needed to ensure the device is successfully detected after plugging back in
+  sleep 5
 fi
 
 adb sideload ${DEVICE}-update-signed.zip

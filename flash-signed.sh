@@ -18,6 +18,9 @@ fastboot flash recovery ./images/recovery-signed.img
 fastboot flash system ./images/system-signed.img
 fastboot flash boot ./images/boot-signed.img
 fastboot flash vendor ./images/vendor-signed.img
+
+# Occasionally a sleep is needed here for the lock to be successful
+sleep 5
 fastboot flashing lock
 
 echo
