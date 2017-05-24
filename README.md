@@ -43,7 +43,7 @@ Your phone will need to have **OEM Unlocking** enabled:
 1. Go to *Settings > About Phone*.
 2. Tap *Build Number* five times.
 3. Go to newly created *Settings > Developer Options*
-4. Check *Enable OEM unlock*
+4. Enable *OEM unlocking*
 
 There are some other things, but the scripts will download them.
 
@@ -53,12 +53,15 @@ To ensure the these downloads are fetched via Tor:
 
 ## Instructions
 
-There are a ton of scripts in here. Eventually, we want to make it possible to
-choose if you want Google Apps, SuperUser, Tor, or some subset. For now, the
-best thing to do is just run `./run_all.sh`. The script should walk you through
-everything, printing out instructions (and command output) as it goes. It will
-halt on any error, but you can re-run it from the top or run pieces of it
-individually.
+It is possible to choose if you want to install Tor, and eventually we want
+to make it possible to choose if you want Google Apps and/or SuperUser.
+
+To get started run `./run_all.sh -h` to see the options.  As a bare minimum you
+must provide a path to th Copperhead image for your device.
+
+The script will walk you through everything, printing out instructions (and
+command output) as it goes. It will halt on any error, but you can re-run it
+from the top or run pieces of it individually.
 
 Below is an example for the `angler` build:
 

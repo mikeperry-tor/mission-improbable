@@ -1,6 +1,15 @@
 #!/bin/bash
+# vim:ts=2 sw=2 sts=2 expandtab:
 
-APPS=( $(cat apk_url_list.txt) )
+if [ $NO_TOR -eq 1 ]; then
+  APPS=( $(grep -Ev "^[[:space:]]*([#]|$)" apk_url_list.txt | grep -Ev 'orwall|orbot') )
+  for REMOVE in orwall orbot; do
+    rm -f packages/*${REMOVE}*.apk
+    rm -f packages/*${REMOVE}*.apk.asc
+  done
+else
+  APPS=( $(grep -Ev "^[[:space:]]*([#]|$)" apk_url_list.txt) )
+fi
 
 set -e
 

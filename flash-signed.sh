@@ -21,7 +21,13 @@ fastboot flash vendor ./images/vendor-signed.img
 fastboot flashing lock
 
 echo
-echo "Please reboot phone into system. You can skip the Google Account Setup,"
-echo "but don't forget to set the clock properly or Orbot won't work."
+echo "Please reboot phone into system.  The first boot can take several minutes, be patient."
+echo
+
+if [ $NO_TOR -eq 0 ]; then
+  echo "Remember to set the clock properly or Orbot won't work."
+  echo
+fi
+
 echo -n "[Hit Enter to continue...]"
 read junk
