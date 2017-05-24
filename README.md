@@ -65,8 +65,14 @@ Below is an example for the `angler` build:
 ### Install
 
 1. **Download** your factory image and its signature from
-the [CopperheadOS download page][copperhead-download], and place it the
-git root directory.
+   the [CopperheadOS download page][copperhead-download], and place it the git
+   root directory.
+
+   You can use the `get-release-image.py` script to get the latest image for your
+   your device and to automatically validate the signature, for example:
+
+        $ get-release-image.py angler
+
 2. **Run** the following:
 
         $ gpg --recv-keys 65EEFE022108E2B708CBFCF7F9E712E59AF5F22A
@@ -80,7 +86,7 @@ update the phone. Keep them safe, and do not lose them.
 
 ### Update
 
-1. **Download** a new Copperhead image as above,
+1. **Download** a new Copperhead image as above.
 2. **Prepare your device keys.** Make sure they are in the `keys/`
    directory.
 3. **Run** the following:
