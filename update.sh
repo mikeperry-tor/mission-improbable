@@ -2,16 +2,72 @@
 
 set -e
 
-if [ $# -ne 2 ]
-then
-  echo "Usage: $0 <new_copperhead_factory_dir> <device_type>"
+usage() {
+  echo "Usage: $0 -c <new_copperhead_factory_dir> -d <device_type> [--no-tor]"
   exit 1
-fi
+}
 
-COPPERHEAD_DIR=$1
+# Use GNU getopt to capture arguments as it allows us to have long options
+# which the bash builtin getopts doesn't support.  We also still support the
+# old # positional arguments for now, but don't advertise them in the usage().
+TEMP=$(getopt -o 'hc:d:T::' --long 'help,copperhead:,device:,no-tor::' -- "$@")
+[ $? -ne 0 ] && usage
+eval set -- "$TEMP"; unset TEMP
+# Set defaults
+NO_TOR=0
+# Parse the args
+while true; do
+  case "$1" in
+    '-c'|'--copperhead')
+      COPPERHEAD_DIR=$2
+      shift 2;
+      continue
+      ;;
+    '-d'|'--device')
+      DEVICE=$2
+      shift 2
+      continue
+      ;;
+    '-T'|'--no-tor')
+      NO_TOR=1
+      shift
+      continue
+      ;;
+    '-h'|'--help')
+      usage
+      ;;
+    '-*')
+      echo "Unknown option: $1" >&2
+      exit 1
+      ;;
+    '--')
+      shift
+      break
+      ;;
+    *)
+      POSITIONAL="$POSITIONAL $1"
+      shift
+      continue
+      ;;
+  esac
+done
+
+set +e
+# Backwards compatibility for positional arguments
+[ -z $COPPERHEAD_DIR ] && [ -n $1 ] && COPPERHEAD_DIR=$1 && shift
+[ -z $DEVICE ] && [ -n $1 ] && DEVICE=$1 && shift
+set -e
+
+export COPPERHEAD_DIR
+export DEVICE
+export NO_TOR
+
+# Bail out if no Copperhead directory was provided or no device defined
+[ -z ${COPPERHEAD_DIR} ] && usage
+[ -z ${DEVICE} ] && usage
+
 SUPERBOOT_DIR=$PWD/helper-repos/super-bootimg
 SIMG2IMG_DIR=$PWD/helper-repos/android-simg2img
-DEVICE=$2
 
 #if [ ! -f "./packages/gapps-delta.tar.xz" ]
 #then
@@ -86,6 +142,8 @@ then
   echo "You need to unplug and replug your device after starting sideload.."
   echo -n "[Hit Enter to continue...]"
   read junk
+  # A sleep is needed to ensure the device is successfully detected after plugging back in
+  sleep 5
 fi
 
 adb sideload ${DEVICE}-update-signed.zip

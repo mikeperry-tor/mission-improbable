@@ -1,0 +1,17 @@
+/keys/
+/images/
+/packages/*.apk
+/packages/*.apk.asc
+/packages/gapps-delta*.xz
+/packages/gapps-delta*.xz.asc
+/packages/trustdb.gpg
+/*-factory*.tar.xz
+/*-factory*.tar.xz.sig
+/*-ota_update*.zip
+/angler-*/
+/bullhead-*/
+/flounder-*/
+/*-update.zip
+/*-update-signed.zip
+*.pyc
+/update/

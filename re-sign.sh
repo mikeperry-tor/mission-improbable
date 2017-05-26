@@ -31,16 +31,17 @@ then
   $TOOL_PATH/simg2img system.img system.img.raw
 fi
 
-
-echo "We now need sudo to install the OrWall startup script..."
-mkdir -p system
-sudo mount system.img.raw system
-sudo cp ../orwall-userinit.sh system/bin/oem-iptables-init.sh
-# system/sbin/svc has u:object_r:system_file:s0, which is convenient since
-# the host selinux may not understand that context
-sudo chcon --reference=system/bin/svc system/bin/oem-iptables-init.sh
-sudo chmod 755 system/bin/oem-iptables-init.sh
-sudo umount system
+if [ $NO_TOR -eq 0 ]; then
+  echo "We now need sudo to install the OrWall startup script..."
+  mkdir -p system
+  sudo mount system.img.raw system
+  sudo cp ../orwall-userinit.sh system/bin/oem-iptables-init.sh
+  # system/sbin/svc has u:object_r:system_file:s0, which is convenient since
+  # the host selinux may not understand that context
+  sudo chcon --reference=system/bin/svc system/bin/oem-iptables-init.sh
+  sudo chmod 755 system/bin/oem-iptables-init.sh
+  sudo umount system
+fi
 
 SYSTEM_SIZE=$($TOOL_PATH/ext2simg -v system.img.raw system-signed.img | grep "Size: " | cut -d: -f2)
 

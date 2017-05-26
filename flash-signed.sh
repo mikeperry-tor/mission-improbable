@@ -18,10 +18,19 @@ fastboot flash recovery ./images/recovery-signed.img
 fastboot flash system ./images/system-signed.img
 fastboot flash boot ./images/boot-signed.img
 fastboot flash vendor ./images/vendor-signed.img
+
+# Occasionally a sleep is needed here for the lock to be successful
+sleep 5
 fastboot flashing lock
 
 echo
-echo "Please reboot phone into system. You can skip the Google Account Setup,"
-echo "but don't forget to set the clock properly or Orbot won't work."
+echo "Please reboot phone into system.  The first boot can take several minutes, be patient."
+echo
+
+if [ $NO_TOR -eq 0 ]; then
+  echo "Remember to set the clock properly or Orbot won't work."
+  echo
+fi
+
 echo -n "[Hit Enter to continue...]"
 read junk

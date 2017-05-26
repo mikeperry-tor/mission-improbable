@@ -24,7 +24,7 @@ do
 done
 
 adb shell "mkdir /sdcard/MyAppList"
-adb push myapplist*xml /sdcard/MyAppList/
+adb push "${MYAPPLIST:-myapplist*xml}" /sdcard/MyAppList/
 
 echo "Disabling captive portal detection"
 adb shell "settings put global captive_portal_mode 0"
