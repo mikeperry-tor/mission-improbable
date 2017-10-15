@@ -1,5 +1,7 @@
 #!/bin/bash
+
 set -e
+[ ${DEBUG:=0} -ge 1 ] && set -x
 
 if [ ! -d "$1" -o ! -s "$2" ]
 then
@@ -24,9 +26,9 @@ popd
 
 cp $COPPERHEAD_DIR/images/boot.img $SUPERBOOT_DIR/scripts/boot.img
 
-cp keys/verity.pk8 $SUPERBOOT_DIR/scripts/keystore.pk8
-cp keys/verity.x509.pem $SUPERBOOT_DIR/scripts/keystore.x509.pem
-cp keys/verity_key.pub $SUPERBOOT_DIR/scripts/verity_key
+cp -f keys/verity.pk8 $SUPERBOOT_DIR/scripts/keystore.pk8
+cp -f keys/verity.x509.pem $SUPERBOOT_DIR/scripts/keystore.x509.pem
+cp -f keys/verity_key.pub $SUPERBOOT_DIR/scripts/verity_key
 
 cd $SUPERBOOT_DIR/scripts
 ./bootimg.sh boot.img

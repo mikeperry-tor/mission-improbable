@@ -18,3 +18,7 @@ system/priv-app/ExtServices
 system/priv-app/OneTimeInitializer/OneTimeInitializer.apk
 system/priv-app/OneTimeInitializer/oat/arm64
 system/priv-app/Provision
+system/priv-app/Provision/oat/arm64/Provision.vdex
+system/priv-app/OneTimeInitializer/oat/arm64/OneTimeInitializer.vdex
+system/priv-app/ExtServices/oat/arm64/ExtServices.vdex
+system/app/QuickSearchBox/oat/arm64/QuickSearchBox.vdex

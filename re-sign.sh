@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+[ ${DEBUG:=0} -ge 1 ] && set -x
 
 EXTRAS_PATH=$(readlink -f ./extras/)
 KEYS_PATH=$(readlink -f ./keys/)
@@ -31,7 +31,7 @@ then
   $TOOL_PATH/simg2img system.img system.img.raw
 fi
 
-if [ $NO_TOR -eq 0 ]; then
+if [ ${NO_TOR:-0} -eq 0 ]; then
   echo "We now need sudo to install the OrWall startup script..."
   mkdir -p system
   sudo mount system.img.raw system
@@ -82,17 +82,17 @@ $SUPERBOOT_PATH/scripts/bin/bootimg-extract $IMAGES_PATH/recovery.img
 
 cd $RECOVERYFILES_DIR
 
-gunzip -c "$RECOVERYRAMDISK_DIR"/ramdisk.gz | cpio -i
+gunzip -c "$RECOVERYRAMDISK_DIR"/ramdisk.gz | cpio --quiet -i
 gunzip -c "$RECOVERYRAMDISK_DIR"/ramdisk.gz > ramdisk1
 
 cp $KEYS_PATH/release_key ./res/keys
 cp $KEYS_PATH/verity_key.pub ./verity_key
-echo "res/keys verity_key" |tr ' ' '\n' | cpio -o -H newc > ramdisk2
+echo "res/keys verity_key" |tr ' ' '\n' | cpio --quiet -o -H newc > ramdisk2
 
 rm -f cpio-*
 rm -f *.cpio
 
-$SUPERBOOT_PATH/scripts/bin/strip-cpio ramdisk1 res/keys verity_key
+$SUPERBOOT_PATH/scripts/bin/strip-cpio ramdisk1 res/keys verity_key 2>/dev/null
 for i in cpio-*
 do
   mv $i `echo $i | cut -d- -f2`.cpio

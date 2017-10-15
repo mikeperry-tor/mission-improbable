@@ -12,6 +12,14 @@
 /bullhead-*/
 /flounder-*/
 /*-update.zip
-/*-update-signed.zip
+/*-update-signed-*.zip
+/*-update-signed-*.zip.sha512
 *.pyc
 /update/
+*.swp
+/log/
+.gnupg/
+.bash_history
+.toprc
+.wget-hsts
+packages/secring.gpg

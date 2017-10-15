@@ -107,9 +107,7 @@ SIMG2IMG_DIR=$PWD/helper-repos/android-simg2img
 
 if [ ! -f ./keys/verity_key.pub ];
 then
-  cd keys
-  ./make_keys.sh $SIMG2IMG_DIR
-  cd -
+  ./extras/make_keys.sh $SIMG2IMG_DIR
 fi
 
 ./install-su.sh $COPPERHEAD_DIR $SUPERBOOT_DIR

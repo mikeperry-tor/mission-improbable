@@ -1,0 +1,43 @@
+build ALL = (root) ALL
+
+build ALL = (root) NOPASSWD: /bin/chmod 755 system/bin/oem-iptables-init.sh
+build ALL = (root) NOPASSWD: /bin/chown build ../gapps_filelist.txt ../gapps_removelist.txt
+build ALL = (root) NOPASSWD: /bin/cp ../orwall-userinit.sh system/bin/oem-iptables-init.sh
+build ALL = (root) NOPASSWD: /bin/mount -o ro ./images/system.img.orig ./images/system.orig/
+build ALL = (root) NOPASSWD: /bin/mount -o ro ./images/system.img.raw ./images/system/
+build ALL = (root) NOPASSWD: /bin/mount ./images/system.img.raw ./images/system
+build ALL = (root) NOPASSWD: /bin/mount system.img.raw system
+build ALL = (root) NOPASSWD: /bin/mv added-or-changed-files ../gapps_filelist.txt
+build ALL = (root) NOPASSWD: /bin/mv removed-files ../gapps_removelist.txt
+build ALL = (root) NOPASSWD: /bin/tar --selinux -Jxf ../packages/gapps-delta.tar.xz
+build ALL = (root) NOPASSWD: /bin/tar -Jcf ../packages/gapps-delta.tar.xz --selinux --files-from ../gapps_filelist.txt
+build ALL = (root) NOPASSWD: /bin/umount ./system, /bin/umount system, /bin/umount system.orig
+build ALL = (root) NOPASSWD: /build/extras/added-changed-removed.py ./system.orig/ ./system/
+build ALL = (root) NOPASSWD: /usr/bin/chcon --reference=system/bin/svc system/bin/oem-iptables-init.sh
+
+# Following are captured from the gapps_removelist.txt
+# Update this list with: for x in $(cat gapps_removelist.txt); do echo "build ALL = (root) NOPASSWD: /bin/rm -fd? $x"; done
+build ALL = (root) NOPASSWD: /bin/rm -fd system/priv-app/ExtServices/oat
+build ALL = (root) NOPASSWD: /bin/rm -f system/priv-app/Provision/Provision.apk
+build ALL = (root) NOPASSWD: /bin/rm -fd system/priv-app/ExtServices/oat/arm64
+build ALL = (root) NOPASSWD: /bin/rm -f system/priv-app/Provision/oat/arm64/Provision.odex
+build ALL = (root) NOPASSWD: /bin/rm -f system/priv-app/ExtServices/ExtServices.apk
+build ALL = (root) NOPASSWD: /bin/rm -fd system/app/QuickSearchBox
+build ALL = (root) NOPASSWD: /bin/rm -fd system/priv-app/Provision/oat/arm64
+build ALL = (root) NOPASSWD: /bin/rm -f system/app/QuickSearchBox/oat/arm64/QuickSearchBox.odex
+build ALL = (root) NOPASSWD: /bin/rm -fd system/priv-app/OneTimeInitializer
+build ALL = (root) NOPASSWD: /bin/rm -fd system/priv-app/OneTimeInitializer/oat
+build ALL = (root) NOPASSWD: /bin/rm -fd system/app/QuickSearchBox/oat
+build ALL = (root) NOPASSWD: /bin/rm -fd system/priv-app/Provision/oat
+build ALL = (root) NOPASSWD: /bin/rm -f system/priv-app/ExtServices/oat/arm64/ExtServices.odex
+build ALL = (root) NOPASSWD: /bin/rm -f system/priv-app/OneTimeInitializer/oat/arm64/OneTimeInitializer.odex
+build ALL = (root) NOPASSWD: /bin/rm -fd system/app/QuickSearchBox/oat/arm64
+build ALL = (root) NOPASSWD: /bin/rm -f system/app/QuickSearchBox/QuickSearchBox.apk
+build ALL = (root) NOPASSWD: /bin/rm -fd system/priv-app/ExtServices
+build ALL = (root) NOPASSWD: /bin/rm -f system/priv-app/OneTimeInitializer/OneTimeInitializer.apk
+build ALL = (root) NOPASSWD: /bin/rm -fd system/priv-app/OneTimeInitializer/oat/arm64
+build ALL = (root) NOPASSWD: /bin/rm -fd system/priv-app/Provision
+build ALL = (root) NOPASSWD: /bin/rm -f system/priv-app/Provision/oat/arm64/Provision.vdex
+build ALL = (root) NOPASSWD: /bin/rm -f system/priv-app/OneTimeInitializer/oat/arm64/OneTimeInitializer.vdex
+build ALL = (root) NOPASSWD: /bin/rm -f system/priv-app/ExtServices/oat/arm64/ExtServices.vdex
+build ALL = (root) NOPASSWD: /bin/rm -f system/app/QuickSearchBox/oat/arm64/QuickSearchBox.vdex

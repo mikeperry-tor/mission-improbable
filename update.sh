@@ -1,16 +1,30 @@
 #!/bin/bash
 
 set -e
+[ ${DEBUG:=0} -ge 1 ] && set -x
+
+trap unexpected_exit INT QUIT
+
+unexpected_exit() {
+    echo "Unexpected exit while running update.  Please check the logs."
+    trap INT QUIT
+    exit
+}
 
 usage() {
-  echo "Usage: $0 -c <new_copperhead_factory_dir> -d <device_type> [--no-tor]"
+  echo "Usage: $0 -c <new_copperhead_factory_dir> -d <device_type> [--no-tor] [--scheduled]"
+  echo "  -c|--copperhead path_to_unpacked_image  The path to the unpacked new image"
+  echo "  -d|--device angler|bullhead             Select the device type"
+  echo "  -T|--no-tor                             Don't install the Tor layer"
+  echo "  -s|--scheduled                          Flag for cron runs to prevent the sideload step."
+  echo "  -h|--help                               This help output"
   exit 1
 }
 
 # Use GNU getopt to capture arguments as it allows us to have long options
 # which the bash builtin getopts doesn't support.  We also still support the
 # old # positional arguments for now, but don't advertise them in the usage().
-TEMP=$(getopt -o 'hc:d:T::' --long 'help,copperhead:,device:,no-tor::' -- "$@")
+TEMP=$(getopt -o 'hsc:d:T::' --long 'help,copperhead:,device:,scheduled,no-tor::' -- "$@")
 [ $? -ne 0 ] && usage
 eval set -- "$TEMP"; unset TEMP
 # Set defaults
@@ -30,6 +44,11 @@ while true; do
       ;;
     '-T'|'--no-tor')
       NO_TOR=1
+      shift
+      continue
+      ;;
+    '-s'|'--scheduled')
+      SCHEDULED=1
       shift
       continue
       ;;
@@ -93,6 +112,9 @@ fi
 cd ../..
 
 ./fetch-apks.sh
+if [ ! -d $SUPERBOOT_DIR ]; then
+    ./clone-helper-repos.sh $SUPERBOOT_DIR $SIMG2IMG_DIR
+fi
 ./install-su.sh $COPPERHEAD_DIR $SUPERBOOT_DIR
 
 ./apply-gapps-delta.sh $COPPERHEAD_DIR $SIMG2IMG_DIR
@@ -119,34 +141,57 @@ cp ../extras/${DEVICE}/metadata META-INF/com/android
 
 # XXX: bootloader.. not sure how to do that..
 
-zip -r ../${DEVICE}-update.zip .
+zip -q -r ../${DEVICE}-update.zip .
 
 cd ..
 
-java -jar ./extras/blobs/signapk.jar -w ./keys/releasekey.x509.pem ./keys/releasekey.pk8 ${DEVICE}-update.zip ${DEVICE}-update-signed.zip
+SIGNED_UPDATE_FILE=$(find . -maxdepth 1 -name "${DEVICE}-factory*.tar.xz" -printf '%f\n' | tail -n1 | sed -e 's/factory/update-signed/' -e 's/tar.xz/zip/')
+java -jar ./extras/blobs/signapk.jar -w ./keys/releasekey.x509.pem ./keys/releasekey.pk8 "${DEVICE}-update.zip" "${SIGNED_UPDATE_FILE}"
+sha512sum "${SIGNED_UPDATE_FILE}" > "${SIGNED_UPDATE_FILE}.sha512"
+rm "${DEVICE}-update.zip"
 
-echo
-echo "Now please reboot your device into recovery:"
-echo "  1. Reboot into Fastboot with Power + Volume Down"
-echo "  2. Use Volume Down to select Recovery, and press Power"
-echo "  3. Briefly tap Power + Volume-Up to get past the broken android logo."
-echo -n "[Hit Enter to continue...]"
-read junk
-echo "Now select 'Apply Update from ADB' with Volume Down, and press Power."
-echo -n "[Hit Enter to continue...]"
-read junk
+if [ $SCHEDULED -eq 1 ]; then
+    {
+        echo
+        echo "A new image is available for flashing:"
+        echo "   ${SIGNED_UPDATE_FILE}"
+        echo "   $(< "${SIGNED_UPDATE_FILE}.sha512")"
+        echo
+        echo "To flash, reboot your device into recovery:"
+        echo "  1. Reboot into Fastboot with Power + Volume Down"
+        echo "  2. Use Volume Down to select Recovery, and press Power"
+        echo "  3. Briefly tap Power + Volume-Up to get past the broken android logo."
+        echo "  4. Select 'Apply Update from ADB' with Volume Down, and press Power."
+        echo "  5. You will need to unplug and replug your device after starting sideload on the device."
+        echo "  6. Run the following command: adb sideload ${DEVICE}-update-signed.zip"
+        echo "  7. When flashing is complete, reboot the device."
+    } >&2
+else
+    echo
+    echo "Now please reboot your device into recovery:"
+    echo "  1. Reboot into Fastboot with Power + Volume Down"
+    echo "  2. Use Volume Down to select Recovery, and press Power"
+    echo "  3. Briefly tap Power + Volume-Up to get past the broken android logo."
+    echo -n "[Hit Enter to continue...]"
+    read junk
+    echo "Now select 'Apply Update from ADB' with Volume Down, and press Power."
+    echo -n "[Hit Enter to continue...]"
+    read junk
 
-if [ -z "$(adb devices | grep sideload)" ]
-then
-  echo
-  echo "You need to unplug and replug your device after starting sideload.."
-  echo -n "[Hit Enter to continue...]"
-  read junk
-  # A sleep is needed to ensure the device is successfully detected after plugging back in
-  sleep 5
+    if [ -z "$(adb devices | grep sideload)" ]
+    then
+      echo
+      echo "You need to unplug and replug your device after starting sideload.."
+      echo -n "[Hit Enter to continue...]"
+      read junk
+      # A sleep is needed to ensure the device is successfully detected after plugging back in
+      sleep 5
+    fi
+
+    adb sideload ${SIGNED_UPDATE_FILE}
+
+    echo
+    echo "All done! Yay! Select Reboot into System and press power."
 fi
 
-adb sideload ${DEVICE}-update-signed.zip
-
-echo
-echo "All done! Yay! Select Reboot into System and press power."
+trap - INT QUIT

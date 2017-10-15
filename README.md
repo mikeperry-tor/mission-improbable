@@ -27,13 +27,17 @@ we need an [update script directory](extras/angler) for updates to work.
 
 ## Prerequisites
 
+Packages:
+
 * **`fastboot` & `adb`.** You need recent versions from the [official
-  command line tools installer][cli-download]. The ones in
-Debian/stable are sadly too old :(. You can tell if yours is recent
+  command line tools installer][cli-download]. You can tell if yours is recent
 enough if fastboot supports the `fastboot flashing unlock` command.
+* **`g++`** compiler, typically available in the `build-essential` package
 * **Java JRE/JDK 1.7+**
 * `git`, `cpio`, `gcc`, `g++`
 * **openssl development packages.** ie. `libssl-dev`/`openssl-devel`
+* **openssl 1.0** doesn't currently build with openssl 1.1
+* **python >= 3.5**
 
 [Configure udev][udev-configuration] on your Linux system so you can use 
 `fastboot` and `adb` as non-root.
@@ -96,7 +100,35 @@ update the phone. Keep them safe, and do not lose them.
 
         $ gpg angler-factory-2016.10.27.20.13.46.tar.xz.sig
         $ tar -Jxvf angler-factory-2016.10.27.20.13.46.tar.xz
-        $ ./update.sh angler-nbd90z angler
+        $ ./update.sh -c angler-nbd90z -d angler
+
+    Note: If you initial flashed with the `--no-tor` option you'll want to
+    do that again here.
+
+#### Prepare an update within a docker container
+
+It's possible to create an update file from within a docker container.  You would then
+sideload the build arefact from any device with `adb` installed.  This process makes use
+of an Ubuntu Trusty 16.04 image, and mounts your mission-improbable checkout at the `/build`
+path.  Unfortunately this does require a privileged container because of the need to mount
+the unpacked system image for modification, however the build process runs as an unprivileged user and makes use of sudo to perform mounts.  The entire process can be done unattended
+if your keys are available to the build process.
+
+Both build and create an update file:
+
+	make docker
+
+To only build the docker image used for generating an update:
+
+    make docker-build
+
+Create a flashable update:
+
+    make docker-update
+
+Enter the container for debugging:
+
+    make docker-debug
 
 ## Binary blobs that run on the host machine
 

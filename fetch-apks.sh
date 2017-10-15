@@ -1,6 +1,8 @@
 #!/bin/bash
 # vim:ts=2 sw=2 sts=2 expandtab:
 
+[ ${DEBUG:=0} -ge 1 ] && set -x
+
 if [ $NO_TOR -eq 1 ]; then
   APPS=( $(grep -Ev "^[[:space:]]*([#]|$)" apk_url_list.txt | grep -Ev 'orwall|orbot') )
   for REMOVE in orwall orbot; do
@@ -19,13 +21,13 @@ for i in $(seq 0 $((${#APPS[@]} - 1)))
 do
   if [ ! -f `basename ${APPS[$i]}` ]
   then
-    wget -U "" ${APPS[$i]}
+    wget --no-verbose -U "" ${APPS[$i]}
   fi
 done
 
 for i in *.asc
 do
-  gpg --homedir=. --no-default-keyring --keyring=gpgkeys.keyring $i
+  gpg --quiet --batch --homedir=. --no-default-keyring --keyring=gpgkeys.keyring $i
 done
 
 # XXX: hrmm.. this is pretty dirty...

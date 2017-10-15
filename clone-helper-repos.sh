@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -e
+[ ${DEBUG:=0} -ge 1 ] && set -x
 
 echo "Cloning android-simg2img and super-bootimg forks..."
 
@@ -20,5 +21,5 @@ cd -
 # XXX: Should add something to check for a different origin/branch/checkout and fix it
 if [ ! -d $SUPERBOOT_DIR ]
 then
-  git clone -b verity_fix-nougat https://github.com/mikeperry-tor/super-bootimg $SUPERBOOT_DIR
+  git clone --quiet --branch verity_fix-nougat https://github.com/mikeperry-tor/super-bootimg $SUPERBOOT_DIR
 fi

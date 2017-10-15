@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -e
+[ ${DEBUG:=0} -ge 1 ] && set -x
 
 if [ ! -f "./packages/gapps-delta.tar.xz" ]
 then
@@ -32,7 +33,7 @@ $TOOL_PATH/simg2img $COPPERHEAD_DIR/images/system.img ./images/system.img.raw
 
 echo "We now need sudo to mount the system image and apply the delta"
 
-sudo mount ./images/system.img.raw ./images/system
+sudo mount ./images/system.img.raw ./images/system || :
 cd images
 # Remove old files that opengapps removes (sort -r ensures parent directories are
 # deleted last)
@@ -45,7 +46,7 @@ do
   fi
 done
 
-sudo tar --selinux -Jxvf ../packages/gapps-delta.tar.xz
+sudo tar --selinux -Jxf ../packages/gapps-delta.tar.xz
 sudo umount ./system
 cd ..
 

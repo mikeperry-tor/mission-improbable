@@ -78,6 +78,6 @@ sudo mv removed-files ../gapps_removelist.txt
 owner=$(whoami)
 sudo chown $owner ../gapps_filelist.txt ../gapps_removelist.txt
 
-sudo tar -Jcvf ../packages/gapps-delta.tar.xz --selinux --files-from ../gapps_filelist.txt
+sudo tar -Jcf ../packages/gapps-delta.tar.xz --selinux --files-from ../gapps_filelist.txt
 sudo umount system
 sudo umount system.orig
